@@ -190,56 +190,6 @@ class TeamPage extends React.Component {
   }
 }
 
-<<<<<<< HEAD
-=======
-const TeamPage = ({
-  team: {
-    id, name, description, users,
-    projects, teamPins,
-    isVerified, verifiedImage, verifiedTooltip,
-    backgroundColor, hasAvatarImage,
-    coverColor, hasCoverImage,
-    _cacheAvatar, _cacheCover,
-  },
-  currentUserIsOnTeam,
-  updateDescription,
-  uploadAvatar, uploadCover, clearCover,
-  addUser, removeUser,
-  addPin, removePin,
-  addProject, removeProject,
-  api,
-}) => (
-  <main className="profile-page team-page">
-    <section>
-      <ProfileContainer
-        avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
-        coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
-        avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}
-        coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
-      >
-        <h1 className="username">
-          {name}
-          {isVerified && <VerifiedBadge image={verifiedImage} tooltip={verifiedTooltip}/>}
-        </h1>
-        <div className="users-information">
-          <TeamUsers {...{users, currentUserIsOnTeam, removeUser}}/>
-          {currentUserIsOnTeam && <AddTeamUser api={api} add={addUser} members={users.map(({id}) => id)}/>}
-        </div>
-        <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount, 0)}/>
-        <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
-      </ProfileContainer>
-    </section>
-    <AddTeamProject {...{currentUserIsOnTeam, addProject}} teamProjects={projects}/>
-    <EntityPageProjects
-      api={api} projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
-      addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam: removeProject}}
-    />
-    {(currentUserIsOnTeam ?
-      <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects}/>
-      : <TeamMarketing/>)}
-  </main>
-);
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
 TeamPage.propTypes = {
   team: PropTypes.shape({
     _cacheAvatar: PropTypes.number.isRequired,
@@ -279,10 +229,6 @@ TeamPage.propTypes = {
   uploadAvatar: PropTypes.func.isRequired,
   uploadCover: PropTypes.func.isRequired,
 };
-
-
-
-
 
 
 // Team Page Loader

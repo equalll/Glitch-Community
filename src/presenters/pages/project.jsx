@@ -82,15 +82,8 @@ const ProjectPage = ({
     userIsCurrentUser, users, teams,
     ...project // 'private' can't be used as a variable name
   },
-<<<<<<< HEAD
-  getReadme,
-  getTeam, getTeamPins,
-  getUser, getUserPins,
-  getProjects,
-=======
   api,
   isAuthorized,
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
   updateDomain,
   updateDescription,
   updatePrivate,
@@ -143,36 +136,6 @@ const ProjectPage = ({
   </main>
 );
 ProjectPage.propTypes = {
-<<<<<<< HEAD
-  project: PropTypes.object.isRequired,
-};
-
-const ProjectPageEditor = ({project, updateFields, ...props}) => {
-  function updateDomain(domain) {
-    return updateFields({domain}).then(() => {
-      history.replaceState(null, null, `/~${domain}`);
-      document.title = `~${domain}`;
-    }, ({response: {data: {message}}}) => Promise.reject(message));
-  }
-  const funcs = {
-    updateDomain: domain => updateDomain(domain),
-    updateDescription: description => updateFields({description}),
-    updatePrivate: isPrivate => updateFields({private: isPrivate}),
-  };
-  return <ProjectPage project={project} {...funcs} {...props}/>;
-};
-ProjectPageEditor.propTypes = {
-  project: PropTypes.object.isRequired,
-  updateFields: PropTypes.func.isRequired,
-};
-
-const ProjectPageLoader = ({name, get, api, ...props}) => (
-  <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-    {project => project ? (
-      <EntityEditor api={api} initial={project} type="projects">
-        {({entity, ...funcs}) => <ProjectPageEditor project={entity} {...funcs} {...props}/>}
-      </EntityEditor>
-=======
   api: PropTypes.any.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   project: PropTypes.object.isRequired,
@@ -186,7 +149,6 @@ const ProjectPageLoader = ({name, get, api, currentUserModel, ...props}) => (
           <ProjectPage api={api} project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
         )}
       </ProjectEditor>
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
     ) : <NotFound name={name}/>}
   </DataLoader>
 );
@@ -194,24 +156,6 @@ ProjectPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-<<<<<<< HEAD
-// Let's keep layout in jade until all pages are react
-export default function(application, name) {
-  const props = {
-    api: application.api(),
-    get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
-    getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
-    getTeam: (id) => application.api().get(`teams/${id}`).then(({data}) => data),
-    getTeamPins: (id) => application.api().get(`teams/${id}/pinned-projects`).then(({data}) => data),
-    getUser: (id) => application.api().get(`users/${id}`).then(({data}) => data),
-    getUserPins: (id) => application.api().get(`users/${id}/pinned-projects`).then(({data}) => data),
-    getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => Project(d).update(d).asProps())),
-    name,
-  };
-  const content = Reactlet(ProjectPageLoader, props, 'projectpage');
-  return LayoutPresenter(application, content);
-}
-=======
 const getProps = (application, name) => ({
   api: application.api(),
   currentUserModel: application.currentUser(),
@@ -226,4 +170,3 @@ const ProjectPageContainer = ({application, name}) => (
 );
 
 export default ProjectPageContainer;
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
