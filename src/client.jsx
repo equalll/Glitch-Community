@@ -51,16 +51,6 @@ function identifyUser(application) {
 
 function routePage(pageUrl, application) {
   // index page ✅
-<<<<<<< HEAD:src/client.js
-  if ((pageUrl === "index.html") || (pageUrl === "")) {
-    application.getQuestions();
-    return {page: IndexPage(application)};
-  }
-
-  // questions page ✅
-  if (pageUrl === 'questions') {
-    return {page: QuestionsPage(application), title: "Questions"};
-=======
   if (pageUrl.match(/^index\.html$/i) || !pageUrl) {
     return {page: <IndexPage application={application}/>};
   }
@@ -68,59 +58,33 @@ function routePage(pageUrl, application) {
   // questions page ✅
   if (pageUrl.match(/^questions$/i)) {
     return {page: <QuestionsPage application={application} title="Questions"/>};
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033:src/client.jsx
   }
 
   // ~project overlay page ✅
   if (pageUrl.charAt(0) === '~') {
-<<<<<<< HEAD:src/client.js
-    const projectDomain = application.removeFirstCharacter(pageUrl);
-    const page = ProjectPage(application, projectDomain);
-=======
     const projectDomain = pageUrl.substring(1);
     const page = <ProjectPage application={application} name={projectDomain}/>;
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033:src/client.jsx
     return {page, title:decodeURI(pageUrl)};
   }
 
   // @name page ✅
   if (pageUrl.charAt(0) === '@') {
-<<<<<<< HEAD:src/client.js
-    application.pageIsUserPage(true);
-    const userLogin = pageUrl.substring(1, pageUrl.length);
-    const page = UserPageByLogin(application, userLogin);
-=======
     const name = pageUrl.substring(1);
     const page = <TeamOrUserPage application={application} name={name}/>;
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033:src/client.jsx
     return {page, title:decodeURI(pageUrl)};
   }
 
   // anon user page ✅
   if (pageUrl.match(/^(user\/)/g)) {
-<<<<<<< HEAD:src/client.js
-    application.pageIsUserPage(true);
-    const userId = application.anonProfileIdFromUrl(pageUrl);
-    const page = UserPageById(application, userId);
-=======
     const userId = parseInt(pageUrl.replace(/^(user\/)/g, ''), 10);
     const page = <UserPage application={application} id={userId} name={`user ${userId}`}/>;
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033:src/client.jsx
     return {page, title: pageUrl};
   }
 
   // root team page ✅
-<<<<<<< HEAD:src/client.js
-  if (application.getCachedTeamByUrl(pageUrl)) {
-    application.pageIsTeamPage(true);
-    const team = application.getCachedTeamByUrl(pageUrl);
-    const page = TeamPage(application, team.id, team.name);
-    return {page, title: team.name};
-=======
   if (rootTeams[pageUrl.toLowerCase()]) {
     const page = <TeamPage application={application} id={rootTeams[pageUrl.toLowerCase()]} name={pageUrl}/>;
     return {page, title: pageUrl};
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033:src/client.jsx
   }
 
   // search page ✅
@@ -133,15 +97,9 @@ function routePage(pageUrl, application) {
 
   // category page ✅
   if (application.categories.some(({url}) => pageUrl === url)) {
-<<<<<<< HEAD:src/client.js
-    application.getCategory(pageUrl);
-    const page = CategoryPage(application);
-    return {page, title: application.category().name()};
-=======
     const category = application.categories.find(({url}) => pageUrl === url);
     const page = <CategoryPage application={application} category={category}/>;
     return {page, title: category.name};
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033:src/client.jsx
   }
  
   // error page ✅
@@ -151,13 +109,8 @@ function routePage(pageUrl, application) {
   };
 }
 
-<<<<<<< HEAD:src/client.js
-function route(location, application) {
-  let normalizedRoute = location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
-=======
 async function route(location, application) {
   const normalizedRoute = location.pathname.replace(/^\/|\/$/g, "");
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033:src/client.jsx
   console.log(`normalizedRoute is ${normalizedRoute}`);
 
   //
