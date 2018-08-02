@@ -96,33 +96,6 @@ export default User = function(I, self) {
       return self.id() === application.currentUser().id();
     },
 
-<<<<<<< HEAD
-    isOnUserPageForCurrentUser(application) {
-      return !!(application.pageIsUserPage() && self.isCurrentUser(application));
-    },
-
-    hiddenIfSignedIn() {
-      if (self.isSignedIn()) { return 'hidden'; }
-    },
-
-    hiddenUnlessSignedIn() {
-      if (!self.isSignedIn()) { return 'hidden'; }
-    },
-
-    //
-    // hiddenIfAnon: ->
-    //   'hidden' if self.isAnon()
-
-    hiddenIfFetched() {
-      if (self.fetched()) { return 'hidden'; }
-    },
-
-    hiddenUnlessFetched() {
-      if (!self.fetched()) { return 'hidden'; }
-    },
-
-=======
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
     tooltipName() {
       return self.login() || "anonymous user";
     },

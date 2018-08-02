@@ -60,91 +60,6 @@ export default Project = function(I, self) {
     avatar() {
       return getAvatarUrl(self.id());
     },
-<<<<<<< HEAD
-        
-    getReadme(application) {
-      if (self.id() === undefined) {
-        self.readmeNotFound(true);
-        self.projectNotFound(true);
-        return;
-      }
-      
-      const { CancelToken } = axios;
-      source = CancelToken.source();
-      self.readme(undefined);
-      self.readmeNotFound(undefined);
-      self.projectNotFound(undefined);
-      let path = `projects/${self.id()}/readme`;
-      let token = application.currentUser() && application.currentUser().persistentToken();
-      if(token){
-        path += `?token=${token}`;
-      }
-      return application.api(source).get(path)
-        .then(function(response) {
-          self.readme(response.data);
-          return application.overlayProject(self);
-        }).catch(function(error) {
-          console.error("getReadme", error);
-          if (error.response.status === 404) {
-            return self.readmeNotFound(true);
-          } 
-          return self.projectNotFound(true);
-        
-        });
-    },
-
-    pushSearchResult(application) {
-      application.searchResultsProjects.push(self);
-      return application.searchResultsProjectsLoaded(true);
-    },
-
-    isPinnedByUser(application) {
-      return Project.isPinnedByUser(application.user(), self.id());
-    },
-
-    isPinnedByTeam(application) {
-      return Project.isPinnedByTeam(application.team(), self.id());
-    },
-           
-    delete() {
-      const projectPath = `/projects/${self.id()}`;
-      return new Promise(function(resolve, reject) {
-        return application.api().delete(projectPath)
-          .then(response => resolve(response)).catch(function(error) {
-            reject(error);
-            return console.error('deleteProject', error);
-          });
-      });
-    },
-      
-    undelete() {
-      const projectPath = `/projects/${self.id()}/undelete`;
-      return new Promise(function(resolve, reject) { 
-        return application.api().post(projectPath)
-          .then(response => resolve(response)).catch(function(error) {
-            console.error('undeleteProject', error);
-            return reject(error);
-          });
-      });
-    },
-    
-    leave() {
-      const projectAuthPath = `/projects/${self.id()}/authorization`;
-      const config = {
-        data: { 
-          targetUserId: application.currentUser().id(),
-        },
-      };
-      return new Promise(function(resolve, reject) {
-        return application.api().delete(projectAuthPath, config)
-          .then(response => resolve(response)).catch(function(error) {
-            console.error('leaveProject', error);
-            return reject(error);
-          });
-      });
-    },
-=======
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
   });
       
   cache[I.id] = self;
@@ -226,8 +141,6 @@ export function getLink(domain) {
   return `/~${domain}`;
 }
 
-<<<<<<< HEAD
-=======
 export function getShowUrl(domain) {
   return `//${domain}.glitch.me`;
 }
@@ -243,6 +156,5 @@ export function getRemixUrl(domain) {
   return `${EDITOR_URL}#!/remix/${domain}`;
 }
 
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
 // Circular dependencies must go below module.exports
 import User from './user';

@@ -143,30 +143,10 @@ export default Team = function(I, self) {
   if (I.id) {
     cache[I.id] = self;
   }
-  // console.log '👯 team cache', cache
 
   return self;
 };
 
-<<<<<<< HEAD
-// Team.getTeamById = function(api, id) {
-//   const teamsPath = `teams/${id}`;
-//   return api.get(teamsPath)
-//     .then(function({data}) {
-//       let ADMIN_ACCESS_LEVEL = 30;
-//       let adminIds = data.users.filter(user => {
-//         return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL;
-//       });
-//       data.adminIds = adminIds.map(user => {
-//         return user.id;
-//       });
-//       return Team(data).update(data)
-//     })
-//     .catch(error => console.error('getTeamById', error));
-// };
-
-=======
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
 
 Team._cache = cache;
 
