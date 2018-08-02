@@ -1,33 +1,20 @@
 /* globals EDITOR_URL Raven */
-<<<<<<< HEAD:src/client.js
-=======
 import 'details-element-polyfill';
 
 import React from 'react';
 import {render} from 'react-dom';
 
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033:src/client.jsx
 import application from './application';
+import rootTeams from './curated/teams.js';
 
 import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
-<<<<<<< HEAD:src/client.js
-import IndexPage from './presenters/pages/index';
-import CategoryPage from './presenters/pages/category';
-import ProjectPage from './presenters/pages/project.jsx';
-import TeamPage from './presenters/pages/team.jsx';
-import {UserPageById, UserPageByLogin} from './presenters/pages/user.jsx';
-import QuestionsPage from './presenters/pages/questions';
-=======
 import IndexPage from './presenters/pages/index.jsx';
 import CategoryPage from './presenters/pages/category.jsx';
 import ProjectPage from './presenters/pages/project.jsx';
 import {TeamPage, UserPage, TeamOrUserPage} from './presenters/pages/team-or-user.jsx';
 import QuestionsPage from './presenters/pages/questions.jsx';
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033:src/client.jsx
-import SearchPage from './presenters/pages/search.jsx';
-import ErrorPage from './presenters/pages/error.jsx';
 
 console.log("#########");
 console.log("❓ query strings are", queryString);
