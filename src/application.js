@@ -181,20 +181,6 @@ var self = Model({
     const projectIds = projectsData.map(project => project.id);
     return Project.getProjectsByIds(self.api(), projectIds);
   },
-<<<<<<< HEAD
-
-  getUsers(usersData) {
-    const userIds = usersData.map(user => user.id);
-    return User.getUsersById(self.api(), userIds);
-  },
-
-  getCategory(url) {
-    const categoryData = find(cachedCategories, category => category.url === url);
-    self.category(Category(categoryData));
-    return Category.updateCategory(application, categoryData.id);
-  },
-=======
->>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
  
   get categories() {
     return cachedCategories;
