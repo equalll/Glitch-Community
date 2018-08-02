@@ -17,8 +17,7 @@ import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/pro
 import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
 
-import LayoutPresenter from '../layout';
-import Reactlet from '../reactlet';
+import Layout from '../layout.jsx';
 
 function trackRemix(id, domain) {
   analytics.track("Click Remix", {
@@ -67,13 +66,14 @@ const ReadmeError = (error) => (
     ? <React.Fragment>This project would be even better with a <code>README.md</code></React.Fragment>
     : <React.Fragment>We couldn't load the readme. Try refreshing?</React.Fragment>
 );
-const ReadmeLoader = ({getReadme}) => (
-  <DataLoader get={getReadme} renderError={ReadmeError}>
-    {readme => <Expander height={200}><Markdown>{readme}</Markdown></Expander>}
+const ReadmeLoader = ({api, domain}) => (
+  <DataLoader get={() => api.get(`projects/${domain}/readme`)} renderError={ReadmeError}>
+    {({data}) => <Expander height={200}><Markdown>{data}</Markdown></Expander>}
   </DataLoader>
 );
 ReadmeLoader.propTypes = {
-  getReadme: PropTypes.func.isRequired,
+  api: PropTypes.any.isRequired,
+  domain: PropTypes.string.isRequired,
 };
 
 const ProjectPage = ({
@@ -82,10 +82,15 @@ const ProjectPage = ({
     userIsCurrentUser, users, teams,
     ...project // 'private' can't be used as a variable name
   },
+<<<<<<< HEAD
   getReadme,
   getTeam, getTeamPins,
   getUser, getUserPins,
   getProjects,
+=======
+  api,
+  isAuthorized,
+>>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
   updateDomain,
   updateDescription,
   updatePrivate,
@@ -127,10 +132,10 @@ const ProjectPage = ({
       </div>
     </section>
     <section id="readme">
-      <ReadmeLoader getReadme={getReadme}/>
+      <ReadmeLoader api={api} domain={domain}/>
     </section>
     <section id="related">
-      <RelatedProjects ignoreProjectId={id} {...{teams, users, getTeam, getTeamPins, getUser, getUserPins, getProjects}}/>
+      <RelatedProjects ignoreProjectId={id} {...{api, teams, users}}/>
     </section>
     <section id="feedback" className="buttons buttons-right">
       <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
@@ -138,6 +143,7 @@ const ProjectPage = ({
   </main>
 );
 ProjectPage.propTypes = {
+<<<<<<< HEAD
   project: PropTypes.object.isRequired,
 };
 
@@ -166,6 +172,21 @@ const ProjectPageLoader = ({name, get, api, ...props}) => (
       <EntityEditor api={api} initial={project} type="projects">
         {({entity, ...funcs}) => <ProjectPageEditor project={entity} {...funcs} {...props}/>}
       </EntityEditor>
+=======
+  api: PropTypes.any.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
+  project: PropTypes.object.isRequired,
+};
+
+const ProjectPageLoader = ({name, get, api, currentUserModel, ...props}) => (
+  <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
+    {project => project ? (
+      <ProjectEditor api={api} initialProject={project} currentUserModel={currentUserModel}>
+        {(project, funcs, userIsMember) => (
+          <ProjectPage api={api} project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
+        )}
+      </ProjectEditor>
+>>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
     ) : <NotFound name={name}/>}
   </DataLoader>
 );
@@ -173,6 +194,7 @@ ProjectPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
+<<<<<<< HEAD
 // Let's keep layout in jade until all pages are react
 export default function(application, name) {
   const props = {
@@ -189,3 +211,19 @@ export default function(application, name) {
   const content = Reactlet(ProjectPageLoader, props, 'projectpage');
   return LayoutPresenter(application, content);
 }
+=======
+const getProps = (application, name) => ({
+  api: application.api(),
+  currentUserModel: application.currentUser(),
+  get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
+  name,
+});
+
+const ProjectPageContainer = ({application, name}) => (
+  <Layout application={application}>
+    <ProjectPageLoader {...getProps(application, name)}/>
+  </Layout>
+);
+
+export default ProjectPageContainer;
+>>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033

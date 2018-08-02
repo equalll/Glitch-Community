@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import LayoutPresenter from '../layout';
-import Reactlet from '../reactlet';
+import Layout from '../layout.jsx';
 
 import ProjectModel from '../../models/project';
 import TeamModel from '../../models/team';
@@ -12,7 +11,6 @@ import ErrorHandlers from '../error-handlers.jsx';
 import Categories from '../categories.jsx';
 import Loader from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
-import {Notifications} from '../notifications.jsx';
 import ProjectsList from '../projects-list.jsx';
 import TeamItem from '../team-item.jsx';
 import UserItem from '../user-item.jsx';
@@ -125,20 +123,14 @@ SearchPage.propTypes = {
   query: PropTypes.string.isRequired,
 };
 
-const SearchPageContainer = ({...props}) => (
-  <Notifications>
+const SearchPageContainer = ({application, query}) => (
+  <Layout application={application}>
     <ErrorHandlers>
-      {errorFuncs => <SearchPage {...errorFuncs} {...props}/>}
+      {errorFuncs => (
+        <SearchPage {...errorFuncs} api={application.api()} categories={application.categories} query={query}/>
+      )}
     </ErrorHandlers>
-  </Notifications>
+  </Layout>
 );
 
-export default function(application, query) {
-  const props = {
-    api: application.api(),
-    categories: application.categories,
-    query,
-  };
-  const content = Reactlet(SearchPageContainer, props);
-  return LayoutPresenter(application, content);
-}
+export default SearchPageContainer;

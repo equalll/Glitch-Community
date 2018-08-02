@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 
-nodemon --exec "bash sh/compile-jade.sh" --watch src/templates --ext .jade &
 bash sh/webpack.sh &
 
 # ESLint the server files:

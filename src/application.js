@@ -146,14 +146,6 @@ var self = Model({
         return self.storeLocal('cachedUser', response.data);
       });
   },
-
-  getUserByLogin(login) {
-    User.getUserByLogin(application, login).then((user) => self.saveUser(user));
-  },
-
-  getUserById(id) {
-    User.getUserById(application, id).then((user) => self.saveUser(user));
-  },
   
   getCurrentUserById(id) {
     User.getUserById(application, id).then((userData) => {
@@ -161,10 +153,6 @@ var self = Model({
       const user = self.loadUser(userData);
       self.currentUser(user);
     });
-  },
-
-  getTeamById(id) {
-    return Team.getTeamById(application, id);
   },
 
   // due to model caching, whenever user.id === currentuser.id, 
@@ -179,7 +167,6 @@ var self = Model({
   
   loadUser(userData){
     userData.fetched = true;
-    userData.initialDescription = userData.description;
     console.log('👀 user data is ', userData);
     self.getProjects(userData.projects);
     
@@ -190,17 +177,11 @@ var self = Model({
     return user;
   },
 
-  saveTeam(teamData) {
-    teamData.fetched = true;
-    console.log('👀 team data is ', teamData);
-    self.team(Team(teamData).update(teamData));
-    return self.getProjects(teamData.projects);
-  },
-
   getProjects(projectsData) {
     const projectIds = projectsData.map(project => project.id);
     return Project.getProjectsByIds(self.api(), projectIds);
   },
+<<<<<<< HEAD
 
   getUsers(usersData) {
     const userIds = usersData.map(user => user.id);
@@ -212,6 +193,8 @@ var self = Model({
     self.category(Category(categoryData));
     return Category.updateCategory(application, categoryData.id);
   },
+=======
+>>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
  
   get categories() {
     return cachedCategories;

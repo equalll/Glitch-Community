@@ -258,6 +258,7 @@ UserPageEditor.propTypes = {
   localRemoveItem: PropTypes.func.isRequired,
 };
 
+<<<<<<< HEAD
 const UserPageLoader = ({api, get, loginOrId, ...props}) => (
   <Notifications>
     <DataLoader get={get} renderError={() => <NotFound name={loginOrId}/>}>
@@ -274,6 +275,14 @@ const UserPageLoader = ({api, get, loginOrId, ...props}) => (
       ) : <NotFound name={loginOrId}/>}
     </DataLoader>
   </Notifications>
+=======
+const UserPageContainer = ({api, user, currentUserModel}) => (
+  <UserEditor api={api} initialUser={user} currentUserModel={currentUserModel}>
+    {(user, funcs, isAuthorized) => (
+      <UserPage api={api} user={user} {...funcs} isAuthorized={isAuthorized}/>
+    )}
+  </UserEditor>
+>>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
 );
 UserPageLoader.propTypes = {
   get: PropTypes.func.isRequired,

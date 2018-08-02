@@ -1,10 +1,4 @@
 let User;
-import axios from 'axios';
-import mdFactory from 'markdown-it';
-const md = mdFactory({
-  breaks: true,
-  linkify: true,
-  typographer: true}).disable(['image']);
 
 import Model from './model';
 const cache = {};
@@ -30,7 +24,6 @@ export default User = function(I, self) {
     login: null,
     name: null,
     description: "",
-    initialDescription: "",
     projects: undefined,
     teams: [],
     thanksCount: 0,
@@ -103,6 +96,7 @@ export default User = function(I, self) {
       return self.id() === application.currentUser().id();
     },
 
+<<<<<<< HEAD
     isOnUserPageForCurrentUser(application) {
       return !!(application.pageIsUserPage() && self.isCurrentUser(application));
     },
@@ -127,6 +121,8 @@ export default User = function(I, self) {
       if (!self.fetched()) { return 'hidden'; }
     },
 
+=======
+>>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
     tooltipName() {
       return self.login() || "anonymous user";
     },
@@ -154,92 +150,6 @@ export default User = function(I, self) {
     glitchTeamAvatar() {
       return "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg";
     },
-
-    updateUser(application, updateData) {
-      const userPath = `users/${self.id()}`;
-      return application.api().patch(userPath, updateData).then(({data}) => {
-        console.log('updatedUser', data);
-        return {
-          success: true,
-          data: data,
-          message: null,
-        };
-      }).catch(error => {
-        console.error(`updateUser PATCH ${userPath}`, error);
-        let message = "Unable to update :-(";
-        if(error && error.response && error.response.data && error.response.data.message) {
-          message = error.response.data.message;
-        }
-        return {
-          success: false,
-          data: updateData,
-          message,
-        };
-      });
-    },
-
-    updateCoverColor(application, color) {
-      self.coverColor(color);
-      return self.updateUser(application, 
-        {coverColor: color});
-    },
-
-    truncatedDescription() {
-      const MAX_CHARACTERS = 140;
-      if (self.description().length > MAX_CHARACTERS) {
-        return self.description().substring(0, MAX_CHARACTERS) + "…";
-      } 
-      return self.description();
-      
-    },
-
-    descriptionMarkdown() {
-      const text = self.description();
-      const node = document.createElement('span');
-      node.innerHTML = md.render(text);
-      return node;
-    },
-    
-    truncatedDescriptionMarkdown() {
-      const text = self.truncatedDescription();
-      const node = document.createElement('span');
-      node.innerHTML = md.render(text);
-      return node;
-    },
-
-    initialDescriptionMarkdown() {
-      const text = self.initialDescription();
-      const node = document.createElement('span');
-      node.innerHTML = md.render(text);
-      return node;
-    },
-
-    userThanks() {
-      const thanksCount = self.thanksCount();
-      if (thanksCount === 1) {
-        return "Thanked once";
-      } else if (thanksCount === 2) {
-        return "Thanked twice";
-      } 
-      return `Thanked ${thanksCount} times`;
-      
-    },
-    
-    addPin(application, projectId) {
-      self.pins.push({
-        projectId});
-      const pinPath = `users/${self.id()}/pinned-projects/${projectId}`;
-      return application.api().post(pinPath)
-        .then(({data}) => console.log(data)).catch(error => console.error('addPin', error));
-    },
-
-    removePin(application, projectId) {
-      const newPins = self.pins().filter(pin => pin.projectId !== projectId);
-      self.pins(newPins);
-      const pinPath = `users/${self.id()}/pinned-projects/${projectId}`;
-      return application.api().delete(pinPath)
-        .then(({data}) => console.log(data)).catch(error => console.error('removePin', error));
-    },
     
     asProps() {
       return {
@@ -253,7 +163,6 @@ export default User = function(I, self) {
         coverColor: self.coverColor(),
         coverUrlSmall: self.coverUrl('small'),
         description: self.description(),
-        initialDescription: self.initialDescription(),
         hasCoverImage: self.hasCoverImage(),
         id: self.id(),
         isAnon: self.isAnon(),
@@ -264,11 +173,9 @@ export default User = function(I, self) {
         avatarStyle: self.avatarStyle(),
         thanksCount: self.thanksCount(),
         tooltipName: self.tooltipName(),
-        // truncatedDescriptionHtml: md.render(self.truncatedDescription()),
         userAvatarUrl: self.userAvatarUrl(),
         userAvatarUrlLarge: self.userAvatarUrl('large'),
         userLink: self.userLink(),
-        userThanks: self.userThanks(),
         
       };
     },
@@ -308,31 +215,6 @@ User.getUserById = function(application, id) {
   return promise;
 };
 
-User.getUsersById = function(api, ids) {
-  const userIdsToFetch = ids.filter(function(id) {
-    const user = cache[id];
-    return !user || !user.fetched();
-  });
-  const usersPath = `users/byIds?ids=${userIdsToFetch.join(',')}`;
-  return api.get(usersPath)
-    .then(function({data}) {
-      data.forEach(function(datum) {
-        datum.fetched = true;
-        return User(datum).update(datum);
-      });
-      return ids.map(id => User({id}));
-    });
-};
-
-User.getSearchResultsJSON = function(application, query) {
-  const { CancelToken } = axios;
-  const source = CancelToken.source();
-  const searchPath = `users/search?q=${query}`;
-  return application.api(source).get(searchPath)
-    .then(({data}) => data)
-    .catch(error => console.error('getSearchResultsJSON', error));
-};
-
 
 User._cache = cache;
 
@@ -343,7 +225,7 @@ export function getAvatarStyle({avatarUrl, color}) {
   };
 }
 
-export function getProfileStyle({id, hasCoverImage, coverColor, cache}) {
+export function getProfileStyle({id, hasCoverImage, coverColor, cache=cacheBuster}) {
   const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-cover/${id}/large?${cache}`;
   const defaultImage = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
   return {

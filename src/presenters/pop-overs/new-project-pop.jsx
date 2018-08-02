@@ -3,13 +3,24 @@ import PropTypes from 'prop-types';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
 
+<<<<<<< HEAD
+=======
+import ProjectModel, {getRemixUrl} from '../../models/project';
+
+>>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
 const NewProjectPop = ({projects}) => (
   <div className="pop-over new-project-pop">
     <section className="pop-over-actions results-list">
       <div className="results">
+<<<<<<< HEAD
         { projects.map((project) => (
           <a key={project.id} href={project.remixUrl}>
             <ProjectResultItem {...project} action={()=>{
+=======
+        {projects.length ? projects.map((project) => (
+          <a key={project.id} href={getRemixUrl(project.domain)}>
+            <ProjectResultItem {...project} users={[]} action={()=>{
+>>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
               /* global analytics */
               analytics.track("New Project Clicked", {
                 baseDomain: project.domain,
@@ -26,7 +37,7 @@ const NewProjectPop = ({projects}) => (
 NewProjectPop.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
+    domain: PropTypes.string.isRequired,
   })).isRequired,
 };
 

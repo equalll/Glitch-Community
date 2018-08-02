@@ -32,7 +32,7 @@ module.exports = () => {
   return {
     mode,
     entry: {
-      "client-bundle": `${SRC}/client.js`,
+      "client-bundle": `${SRC}/client.jsx`,
       [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
     },
     output: {

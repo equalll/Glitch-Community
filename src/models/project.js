@@ -1,14 +1,10 @@
-/* global application CDN_URL EDITOR_URL*/
-import {find} from 'lodash';
+/* global CDN_URL EDITOR_URL*/
 
 let Project;
 const cache = {};
 
 import Team from './team';
 import Model from './model';
-import axios from 'axios';
-
-let source = undefined; // reference to cancel token
 
 export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Ffallback-project-avatar.svg?1528812220123";
 
@@ -54,34 +50,17 @@ export default Project = function(I, self) {
         name: project.name(),
         private: project.private(),
         showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
-        remixUrl: project.remixUrl(),
-        userIsCurrentUser: project.userIsCurrentUser(application),
       };
     },
 
     name() {
       return self.domain();
     },
-  
-    editUrl() {
-      if (I.line) {
-        return `${EDITOR_URL}#!/${I.domain}?path=${I.path}:${I.line}:${I.character}`;
-      }
-      return `${EDITOR_URL}#!/${I.domain}`;
-    },
-    
-    remixUrl() {
-      return `${EDITOR_URL}#!/remix/${I.domain}`;
-    },
-
-    userIsCurrentUser(application) {
-      const userIsCurrentUser = find(self.users(), user => user.id() === application.currentUser().id());
-      return !!userIsCurrentUser;
-    },
 
     avatar() {
       return getAvatarUrl(self.id());
     },
+<<<<<<< HEAD
         
     getReadme(application) {
       if (self.id() === undefined) {
@@ -164,6 +143,8 @@ export default Project = function(I, self) {
           });
       });
     },
+=======
+>>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
   });
       
   cache[I.id] = self;
@@ -245,5 +226,23 @@ export function getLink(domain) {
   return `/~${domain}`;
 }
 
+<<<<<<< HEAD
+=======
+export function getShowUrl(domain) {
+  return `//${domain}.glitch.me`;
+}
+
+export function getEditorUrl(domain, path, line, character) {
+  if (path && !isNaN(line) && !isNaN(character)) {
+    return `${EDITOR_URL}#!/${domain}?path=${path}:${line}:${character}`;
+  }
+  return `${EDITOR_URL}#!/${domain}`;
+}
+
+export function getRemixUrl(domain) {
+  return `${EDITOR_URL}#!/remix/${domain}`;
+}
+
+>>>>>>> 179d7950bb1126424694bb2f6b1ed428e38fc033
 // Circular dependencies must go below module.exports
 import User from './user';

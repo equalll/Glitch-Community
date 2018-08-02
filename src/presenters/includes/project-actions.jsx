@@ -1,13 +1,9 @@
-/* global EDITOR_URL */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const showIcon = "https://cdn.gomix.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg";
+import { getShowUrl, getEditorUrl, getRemixUrl } from '../../models/project';
 
-const showUrl = (name) => `https://${name}.glitch.me`;
-const editUrl = (name) => `${EDITOR_URL}#!/${name}`;
-const remixUrl = (name) => `${EDITOR_URL}#!/remix/${name}`;
+const showIcon = "https://cdn.gomix.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg";
 
 const ButtonLink = ({href, children, className, onClick}) => (
   <a
@@ -25,7 +21,7 @@ ButtonLink.propTypes = {
 };
 
 export const ShowButton = ({name, className, ...props}) => (
-  <ButtonLink href={showUrl(name)} className={`has-emoji ${className}`} {...props}>
+  <ButtonLink href={getShowUrl(name)} className={`has-emoji ${className}`} {...props}>
     <img src={showIcon} alt=""/>
     {' '}Show
   </ButtonLink>
@@ -36,7 +32,7 @@ ShowButton.propTypes = {
 };
 
 export const EditButton = ({name, isMember, ...props}) => (
-  <ButtonLink href={editUrl(name)} {...props}>
+  <ButtonLink href={getEditorUrl(name)} {...props}>
     {isMember ? 'Edit Project' : 'View Source'}
   </ButtonLink>
 );
@@ -47,7 +43,7 @@ EditButton.propTypes = {
 };
 
 export const RemixButton = ({name, isMember, className, ...props}) => (
-  <ButtonLink href={remixUrl(name)} className={`has-emoji ${className}`} {...props}>
+  <ButtonLink href={getRemixUrl(name)} className={`has-emoji ${className}`} {...props}>
     {isMember ? 'Remix This' : 'Remix your own'}{' '}
     <span className="emoji microphone" role="presentation"></span>
   </ButtonLink>

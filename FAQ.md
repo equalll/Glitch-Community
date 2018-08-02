@@ -23,13 +23,6 @@ window.localStorage.cachedUser = JSON.stringify(`[Paste JSON Here]`)
 ```
 
 
-### Why are some templates in .jade, and others in .jsx?
-
-This site started as a Jadelet site, so all the templates were written in .jade.  We're in the process of converting it to a React.js site, so for now we see a mixture of .jsx and .jade files.  Eventually we'll be 100% .jsx and 0% .jade, but we're working toward that incrementally.
-
-All new content should be in .jsx,  and we're capable of calling .jsx templates from within .jade templates.  We're not presently able to call .jade templates from within .jsx, but we solve that by porting the pages to .jsx instead.
-
-
 ### How do I add a question to the FAQ?
 
 I'd suggest remixing the site and adding the question.  Feel free to take a stab at the answer, if you like.  See CONTRIBUTING.md for how to contribute :-)

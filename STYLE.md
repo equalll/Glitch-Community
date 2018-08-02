@@ -36,11 +36,6 @@ Our linter runs a lovely jsx-a11y plugin which does a lot of the hard work for u
 
 More details available at [The A11y Project](https://a11yproject.com/)
 
-
-Prefer React.js
----------------------
-This is a codebase in transition.  What started as coffeescript/jadelet/Observables is making its way toward ES6/React.js.
-
 Prefer Common React Patterns
 ----------------------------
 [React Patterns](https://reactpatterns.com/) is a great guide.  For the most part, our React code can all be written using the [stateless function pattern](https://reactpatterns.com/#stateless-function).  When we need state, we can use the [container component pattern](https://reactpatterns.com/#container-component).  It's rare that we need to build something that can't be factored out into those patterns.
