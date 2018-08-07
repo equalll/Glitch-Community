@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Make Your Own Stencil Text',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fstencilfy.jpg?1532951362600",
-    link: 'https://glitch.com/~stencilfy'
+    title: 'Marlow Moss\'s Minimalist Art',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmarlow-moss.jpg?1533554478016",
+    link: 'http://marlow-moss.glitch.me/'
   }
   , {
-    title: 'Wax Poetic with Emoji Moons',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fwaxing-poetic.jpg?1532951365562",
-    link: 'https://glitch.com/~waxing-poetic'
+    title: 'Arithmetic With Inches and Feet',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fshopcalc.jpg?1533554478824",
+    link: 'https://shopcalc.glitch.me/'
   } 
   , {
-    title: 'Choose Your Own Adventure!',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fchoose-your-own-adventure.jpg?1532951364679",
-    link: 'https://glitch.com/~choose-your-own-adventure'
+    title: 'Interact With A 3D Book',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fview-3d.jpg?1533554476536",
+    link: 'https://glitch.com/~view-3d'
   }  
 ];
