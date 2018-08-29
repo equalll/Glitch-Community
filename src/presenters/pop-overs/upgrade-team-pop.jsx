@@ -4,96 +4,12 @@ import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 
 import {StaticUsersList} from "../users-list.jsx";
-import {CurrentUserConsumer} from "../includes/current-user.jsx"
+import {CurrentUserConsumer} from "../current-user.jsx";
 import DevToggles from '../includes/dev-toggles.jsx';
-
-const {BILLING_SERVICE_URL} = require("./constants");
 
 const STRIPE_PUBLIC_API_KEY="pk_test_WIJxKl0T1xT8zSb2StHu8zlo";
 const GLITCH_STRIPE_LOGO_URL="https://cdn.glitch.com/41bc522e-d971-486e-b08e-7c12034743f9%2Fglitch-square-stripe-logo.png?1528914311237";
 const PRICE_PER_USER = 10;
-
-const billingService = axios.create({
-  baseURL: BILLING_SERVICE_URL,
-  timeout: 5000,
-});
-
-
-
-
-
-/*
-const Billing = ({user, userSubscriptions, userSubscription, changeUserSubscription}) => {
-  
-  function clickTest() {
-    onToken(null);
-  }
-  function onToken(token) {
-    const plan = userSubscription.toLowerCase();
-    const id = user.id;
-    const persistentToken = window.application.currentUser().persistentToken();
-    
-    return axios({
-      method: 'post',
-      url: 'https://stripe-plans.glitch.me/billing/customer',
-      params: {
-        authorization: persistentToken,
-      },
-      data: {
-        token,
-        plan,
-      }
-    }).then((response)=>{
-      console.log(response);
-    });
-  }
-
-  return (
-
-      <StripeCheckout 
-        stripeKey={STRIPE_API_KEY}
-        token={onToken}
-        amount={999} // this should be dynamic depending on the plan
-        name="Glitch"
-        description={userSubscription}
-        image={GLITCH_STRIPE_LOGO_URL}
-        locale="auto"
-        zipCode={true}
-        allowRememberMe={true}
-        email={user.email} 
-      >
-        <button>
-        Add Payment Information
-        </button>
-      </StripeCheckout>
-      <StripeCheckout 
-        stripeKey={STRIPE_API_KEY}
-        token={onToken}
-        amount={999} // this should be dynamic depending on the plan
-        name="Glitch"
-        description={userSubscription}
-        image={GLITCH_STRIPE_LOGO_URL}
-        locale="auto"
-        zipCode={true}
-        allowRememberMe={true}
-        email={user.email} 
-      >
-        <button>
-        Update Payment Information
-        </button>
-      </StripeCheckout>
-    </section>
-  );
-};
-
-Billing.propTypes = {
-  user: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-  }).isRequired,
-};
-
-
-*/
 
 export class UpgradeTeamPop extends React.Component {
   constructor(props) {
@@ -106,16 +22,9 @@ export class UpgradeTeamPop extends React.Component {
   }
   
   
-  // async function getProjectFromApi(domain) {
-//   const response = await api.get(`/projects/${domain}`);
-//   return response.data;
-// }
-  
-  componentDidMount() {
-    
-    // get billing user
+  componentDidMount() {    
+    // get # of active users
     // update state / loading
-    // const customer = await billingService.get(`billing/customer/:entity/:id`)
     
     let monthlyCost = this.props.users.length * PRICE_PER_USER;
     this.setState({
@@ -125,10 +34,7 @@ export class UpgradeTeamPop extends React.Component {
  
   onToken(token) {
     const plan = "pyrite";
-    const id = this.props.currentUser.id;
     const persistentToken =this.props.currentUser.persistentToken;
-    
-    // await billingService.post('/billing/customer')
     
     return axios({
       method: 'post',
@@ -144,6 +50,7 @@ export class UpgradeTeamPop extends React.Component {
       console.log(response);
     });
   }
+  
     
   render() {
     let users = () => {
@@ -151,6 +58,42 @@ export class UpgradeTeamPop extends React.Component {
         user.userLink = null;
         return user;
       });
+    };
+    
+    const Checkout = ({usePlaceholder}) => {
+      if(usePlaceholder) {
+        return (
+          <React.Fragment>
+            <button className="button buttom-small button-cta has-emoji opens-pop-over" disabled>
+              <span>Upgrade {this.props.teamName} </span>
+              <span className="emoji credit_card"/>
+            </button>
+            <p className="action-description">
+              Paid teams are coming soon. In the meantime, feel free to add as many projects as you want, they won't go away.
+            </p>
+          </React.Fragment>
+        );
+      }
+      
+      return (
+        <StripeCheckout 
+          stripeKey={STRIPE_PUBLIC_API_KEY}
+          token={this.onToken}
+          amount={parseInt(this.state.monthlyCost + '00')} // (1000 = 10.00)
+          name="Glitch"
+          description={"Glitch for teams, yo!"}
+          image={GLITCH_STRIPE_LOGO_URL}
+          locale="auto"
+          zipCode={true}
+          allowRememberMe={true}
+          email={this.props.currentUser.email} 
+        >
+          <button className="button buttom-small button-cta has-emoji opens-pop-over">
+            <span>Upgrade {this.props.teamName} </span>
+            <span className="emoji credit_card"/>
+          </button>
+        </StripeCheckout>
+      );
     };
     
     return (
@@ -167,29 +110,11 @@ export class UpgradeTeamPop extends React.Component {
           <StaticUsersList users={users()}/>
         </section>
         <section className="pop-over-actions">
-          { /* https://github.com/azmenak/react-stripe-checkout */}
-          <StripeCheckout 
-            stripeKey={STRIPE_PUBLIC_API_KEY}
-            token={this.onToken}
-            amount={parseInt(this.state.monthlyCost + '00')} // this should be dynamic depending on the plan , is int (999 = 9.99)
-            name="Glitch"
-            description={"Glitch for teams, yo!"}
-            image={GLITCH_STRIPE_LOGO_URL}
-            locale="auto"
-            zipCode={true}
-            allowRememberMe={true}
-            email={this.props.currentUser.email} 
-          >
-            <button className="button buttom-small button-cta has-emoji opens-pop-over" onClick={this.clickTest()}>
-              <span>Upgrade {this.props.teamName} </span>
-              <span className="emoji credit_card"/>
-            </button>
-          </StripeCheckout>
-          
-          <p className="action-description">
-            Paid teams are coming soon. In the meantime, feel free to add as many projects as you want, they won't go away.
-          </p>
-
+          <DevToggles>
+            {(enabledToggles) => (
+              <Checkout usePlaceholder={!enabledToggles.includes("team-billing") }/>
+            )}
+          </DevToggles>
         </section>
         <section className="pop-over-info">
           <div className="info-description">
@@ -211,11 +136,11 @@ UpgradeTeamPop.propTypes = {
   currentUser: PropTypes.object.isRequired,
 };
 
-const UpgradeTeamPopWithUser = (props) => {
+const UpgradeTeamPopWithUser = (props) => (
   <CurrentUserConsumer>
     {(currentUser) => <UpgradeTeamPop {...props} currentUser={currentUser}/>}
   </CurrentUserConsumer>
-}
+);
 
 
 export default UpgradeTeamPopWithUser;

@@ -6,7 +6,6 @@ let EDITOR_URL = 'https://glitch.com/edit/';
 let CDN_URL = 'https://cdn.glitch.com';
 let GITHUB_CLIENT_ID = "b4cb743ed07e20abf0b2";
 let FACEBOOK_CLIENT_ID = "660180164153542";
-let BILLING_SERVICE_URL = "https://stripe-plans.glitch.me/"
 
 if (process.env.RUNNING_ON === 'staging') {
   APP_URL = 'https://staging.glitch.com';
