@@ -4,10 +4,23 @@ import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 
 import {StaticUsersList} from "../users-list.jsx";
+import {CurrentUserConsumer} from "../includes/current-user.jsx"
+import DevToggles from '../includes/dev-toggles.jsx';
+
+const {BILLING_SERVICE_URL} = require("./constants");
 
 const STRIPE_PUBLIC_API_KEY="pk_test_WIJxKl0T1xT8zSb2StHu8zlo";
 const GLITCH_STRIPE_LOGO_URL="https://cdn.glitch.com/41bc522e-d971-486e-b08e-7c12034743f9%2Fglitch-square-stripe-logo.png?1528914311237";
 const PRICE_PER_USER = 10;
+
+const billingService = axios.create({
+  baseURL: BILLING_SERVICE_URL,
+  timeout: 5000,
+});
+
+
+
+
 
 /*
 const Billing = ({user, userSubscriptions, userSubscription, changeUserSubscription}) => {
@@ -88,11 +101,21 @@ export class UpgradeTeamPop extends React.Component {
     this.state = {
       monthlyCost: 0
     };
+    
+    this.onToken = this.onToken.bind(this);
   }
   
+  
+  // async function getProjectFromApi(domain) {
+//   const response = await api.get(`/projects/${domain}`);
+//   return response.data;
+// }
+  
   componentDidMount() {
+    
     // get billing user
     // update state / loading
+    // const customer = await billingService.get(`billing/customer/:entity/:id`)
     
     let monthlyCost = this.props.users.length * PRICE_PER_USER;
     this.setState({
@@ -102,8 +125,10 @@ export class UpgradeTeamPop extends React.Component {
  
   onToken(token) {
     const plan = "pyrite";
-    const id = user.id; // current user id
-    const persistentToken = window.application.currentUser().persistentToken();
+    const id = this.props.currentUser.id;
+    const persistentToken =this.props.currentUser.persistentToken;
+    
+    // await billingService.post('/billing/customer')
     
     return axios({
       method: 'post',
@@ -142,19 +167,18 @@ export class UpgradeTeamPop extends React.Component {
           <StaticUsersList users={users()}/>
         </section>
         <section className="pop-over-actions">
-          {/* Temporary: remove this once billing is ready */}
-          { /* https://github.com/azmenak/react-stripe-checkout */
+          { /* https://github.com/azmenak/react-stripe-checkout */}
           <StripeCheckout 
             stripeKey={STRIPE_PUBLIC_API_KEY}
             token={this.onToken}
             amount={parseInt(this.state.monthlyCost + '00')} // this should be dynamic depending on the plan , is int (999 = 9.99)
             name="Glitch"
-            description={userSubscription}
+            description={"Glitch for teams, yo!"}
             image={GLITCH_STRIPE_LOGO_URL}
             locale="auto"
             zipCode={true}
             allowRememberMe={true}
-            email={user.email} 
+            email={this.props.currentUser.email} 
           >
             <button className="button buttom-small button-cta has-emoji opens-pop-over" onClick={this.clickTest()}>
               <span>Upgrade {this.props.teamName} </span>
@@ -184,7 +208,14 @@ UpgradeTeamPop.propTypes = {
   currentUserId: PropTypes.number.isRequired,
   togglePopover: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
 
+const UpgradeTeamPopWithUser = (props) => {
+  <CurrentUserConsumer>
+    {(currentUser) => <UpgradeTeamPop {...props} currentUser={currentUser}/>}
+  </CurrentUserConsumer>
+}
 
-export default UpgradeTeamPop;
+
+export default UpgradeTeamPopWithUser;
