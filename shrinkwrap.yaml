@@ -46,6 +46,7 @@ dependencies:
   react-onclickoutside: 6.7.1
   react-pluralize: 1.4.1
   react-router-dom: 4.3.1
+  react-stripe-checkout: 2.6.3
   react-textarea-autosize: 7.0.4
   stylus: 0.54.5
   stylus-loader: 3.0.2
@@ -5109,6 +5110,10 @@ packages:
       react: ^0.13.0 || ^0.14.0 || ^15.0.0 || ^16.0.0
     resolution:
       integrity: sha512-Z2ZJE4p/jIfvUpiUMRydEVpQRf2f8GMHczT6qLcARmX7QRb28JDBTpnM2g/i5y/p7ZDEXYGHWg0RbhikE+hJRw==
+  /react-stripe-checkout/2.6.3:
+    dev: false
+    resolution:
+      integrity: sha1-MXOocLBOWjwyGgbSTNU8YDARHEU=
   /react-textarea-autosize/7.0.4:
     dependencies:
       prop-types: 15.6.2
@@ -6445,6 +6450,7 @@ specifiers:
   react-onclickoutside: ^6.7.1
   react-pluralize: ^1.4.0
   react-router-dom: ^4.3.1
+  react-stripe-checkout: ^2.6.3
   react-textarea-autosize: ^7.0.4
   stylus: ^0.54.5
   stylus-loader: ^3.0.2
