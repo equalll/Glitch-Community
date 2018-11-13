@@ -64,20 +64,13 @@ class NewProjectPopButton extends React.Component {
     this.load();
   }
   
-  popButtonClass() {
-    if (!this.props.popButtonIsLarge) {
-      return 'button-small'
-    } else {
-      return ''
-    }
-  }
-  
   render() {
+    const popButtonClass= this.props.popButtonIsLarge ? '' : 'button-small';
     return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <div className="button-wrap">
-            <button className={this.popButtonClass()} data-track="open new-project pop" onClick={togglePopover}>New Project</button>
+            <button className={popButtonClass} data-track="open new-project pop" onClick={togglePopover}>New Project</button>
             {visible && <NewProjectPop projects={this.state.projects}/>}
           </div>
         )}
