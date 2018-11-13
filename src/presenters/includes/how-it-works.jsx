@@ -1,8 +1,9 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import OverlayVideo from '../overlays/overlay-video.jsx';
 import Link from '../includes/link.jsx';
+import NewProjectPop from "../pop-overs/new-project-pop.jsx";
 
 function loadScript(src) {
   const script = document.createElement('script');
@@ -12,6 +13,10 @@ function loadScript(src) {
 }
 
 export default class HowItWorks extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() {
     loadScript('//fast.wistia.com/embed/medias/i0m98yntdb.jsonp');
     loadScript('//fast.wistia.com/assets/external/E-v1.js');
@@ -27,7 +32,7 @@ export default class HowItWorks extends React.Component {
     return (
       <section className="how-it-works">
         <h2>How It Works</h2>
-        <div class="explanation">
+        <div className="explanation">
           <p>Discover over a million free apps, bots & games you can't find anywhere else,</p>
           <p>Remix anything you find and edit it to make it your own,</p>
           <p>Invite your whole team and build together.</p>
@@ -37,18 +42,38 @@ export default class HowItWorks extends React.Component {
           <img src={illustration} alt=""/>  
         </figure>
         
-        <div class="inline-banners">
+        <div className="inline-banners">
           <p>
             Glitch is <img className="free" src={free} alt="free"/>
           </p>
-          <OverlayVideo>
-            <div className="video">
-              <img className="play-button" src={play} alt="play"/>
-              <span>How it works in 1 minute</span>
-            </div>
-          </OverlayVideo>
+          <p>
+            <OverlayVideo>
+              <div className="video">
+                <img className="play-button" src={play} alt="play"/>
+                <span>How it works in 1 minute</span>
+              </div>
+            </OverlayVideo>
+          </p>
+
+          <p>
+            <Link to="/about/features">
+              Features
+            </Link>
+          </p>
+
+          <p>
+            <Link to="/teams">
+              About Teams
+            </Link>
+          </p>
+          <NewProjectPop api={api}/>
         </div>
       </section>
     );
   }
 }
+
+HowItWorks.propTypes = {
+  api: PropTypes.func.isRequired,
+};
+

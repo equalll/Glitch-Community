@@ -34,7 +34,7 @@ const IndexPage = ({api, user}) => (
     <Featured/>
     <RandomCategories api={api}/>
     <Categories/>
-    {!(user && user.login) && <HowItWorks/>}
+    {!(user && user.login) && <HowItWorks api={api}/>}
     <MadeInGlitch/>
   </main>
 );
