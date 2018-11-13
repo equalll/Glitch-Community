@@ -42,7 +42,7 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectDomai
   });
   
   return (
-    <dialog className="pop-over analytics-projects-pop">
+    <dialog className="pop-over analytics-projects-pop wide-pop">
       <section className="pop-over-info">
         <input
           autoFocus // eslint-disable-line jsx-a11y/no-autofocus

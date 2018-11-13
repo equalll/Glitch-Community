@@ -417,11 +417,12 @@ details.popover-container
     margin-bottom: 0
 
 .wide-pop
-    width: 90%
-    min-width: 360px
+    min-width: 350px
     right: 0
     top: 27px
     display: inline-block
+    @media (max-width: smallViewport)
+      min-width: 320px
     
 .team-user-remove-pop
   .projects-list
