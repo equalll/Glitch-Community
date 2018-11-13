@@ -27,15 +27,20 @@ export default class HowItWorks extends React.Component {
     return (
       <section className="how-it-works">
         <h2>How It Works</h2>
-        <div class="explanation"></div>
-        <p>Discover over a million free apps, bots & games you can't find anywhere else,</p>
-        <p>Remix anything you find and edit it to make it your own,</p>
-        <p>Invite your whole team and build together.</p>
+        <div class="explanation">
+          <p>Discover over a million free apps, bots & games you can't find anywhere else,</p>
+          <p>Remix anything you find and edit it to make it your own,</p>
+          <p>Invite your whole team and build together.</p>
+        </div>
+
         <figure title="How Glitch works">
-          <img src={illustration} alt=""/>
+          <img src={illustration} alt=""/>  
         </figure>
-        <div>
-          And it's <img className="free" src={free} alt="free"/>.{' '}
+        
+        <div class="inline-banners">
+          <p>
+            Glitch is <img className="free" src={free} alt="free"/>
+          </p>
           <OverlayVideo>
             <div className="video">
               <img className="play-button" src={play} alt="play"/>
