@@ -63,7 +63,7 @@ export default class HowItWorks extends React.Component {
             </Link>
           </p>
 
-          <NewProjectPop api={this.props.api}/>
+          <NewProjectPop api={this.props.api} popButtonIsLarge={true}/>
           
         </div>
       </section>
@@ -72,6 +72,6 @@ export default class HowItWorks extends React.Component {
 }
 
 HowItWorks.propTypes = {
-  api: PropTypes.func.isRequired,
+  api: PropTypes.func.isRequired
 };
 
