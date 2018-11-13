@@ -25,7 +25,7 @@ export default class HowItWorks extends React.Component {
   render() {
     const free = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffree.svg?1499350845981";
     const play = "https://cdn.hyperdev.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fplay.svg";
-    const illustration = "https://cdn.glitch.com/543c059e-33e3-4490-8582-b02ea65ed3a0%2Fwhat-is-glitch-simple.svg?1542137894293"
+    const illustration = "https://cdn.glitch.com/543c059e-33e3-4490-8582-b02ea65ed3a0%2Fwhat-is-glitch-simple.svg?1542137894293";
     return (
       <section className="how-it-works">
         <h2>How It Works</h2>
