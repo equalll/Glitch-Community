@@ -218,13 +218,15 @@ ${secondHalf}`;
   renderSuccess() {
     return this.renderSent(
       <>
-        Report Sent{" "}
-        <span className="emoji email" role="img" aria-label=""/>
+        Report Abuse
       </>,
-      <p className="pop-description">
-        Thanks for helping to keep Glitch a safe, friendly community!{" "}
-        <span className="emoji park" role="img" aria-label=""/>
-      </p>
+      <>
+        <div className="notification notifySuccess">Report Sent</div>
+        <p className="pop-description">
+          Thanks for helping to keep Glitch a safe, friendly community{" "}
+          <span className="emoji park" role="img" aria-label=""/>
+        </p>
+      </>
     );
   }
 
@@ -255,7 +257,7 @@ ${secondHalf}`;
 
   render() {
     return (
-      <dialog className="pop-over wide-pop top-right">
+      <dialog className="pop-over wide-pop top-right report-abuse-pop">
         {this.pickFormBody()}
       </dialog>
     );
@@ -276,11 +278,11 @@ const ReportAbusePopContainer = props => (
 
 const ReportAbusePopButton = props => (
   <PopoverWithButton buttonClass="button-tertiary" buttonText="Report Abuse">
-      <ReportAbusePopContainer
-            projectName={props.projectName}
-            projectId={props.projectId}
-      />
-    </PopoverWithButton>);
+    <ReportAbusePopContainer
+      projectName={props.projectName}
+      projectId={props.projectId}
+    />
+  </PopoverWithButton>);
 
 ReportAbusePopButton.propTypes = {
   projectName: PropTypes.string.isRequired,

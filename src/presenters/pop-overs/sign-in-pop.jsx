@@ -145,6 +145,6 @@ SignInPop.propTypes = {
 
 export default function SignInPopContainer(props) {
   return <PopoverWithButton buttonClass='button button-small' buttonText='Sign in' passToggleToPop>
-      <SignInPop {...props}/>
-    </PopoverWithButton>;
+    <SignInPop {...props}/>
+  </PopoverWithButton>;
 }

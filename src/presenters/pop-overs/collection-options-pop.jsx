@@ -44,9 +44,9 @@ export default function CollectionOptions({deleteCollection, collection}) {
       buttonText={<div className="down-arrow" aria-label='options' />} 
       buttonClass="collection-options button-borderless opens-pop-over" >
       <CurrentUserConsumer>
-          {user => <CollectionOptionsPop collection={collection} 
-                     deleteCollection={deleteCollection} 
-                     currentUser={user}/>}
+        {user => <CollectionOptionsPop collection={collection} 
+          deleteCollection={deleteCollection} 
+          currentUser={user}/>}
       </CurrentUserConsumer>
     </PopoverWithButton>);
 }

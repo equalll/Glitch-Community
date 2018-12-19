@@ -86,64 +86,64 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
 
       {props.joinTeamProject &&
         props.leaveTeamProject && (
-          <section className="pop-over-actions collaborator-actions">
-            {!props.currentUserIsOnProject && (
-              <PopoverButton
-                onClick={joinTeamProject}
-                text="Join Project "
-                emoji="rainbow"
-              />
-            )}
-            {props.currentUserIsOnProject && (
-              <PopoverButton
-                onClick={leaveTeamProject}
-                text="Leave Project "
-                emoji="wave"
-              />
-            )}
-          </section>
-        )}
-
-      {props.leaveProject &&
-        props.project.users.length > 1 && (
-          <section className="pop-over-actions collaborator-actions">
+        <section className="pop-over-actions collaborator-actions">
+          {!props.currentUserIsOnProject && (
             <PopoverButton
-              onClick={leaveProject}
+              onClick={joinTeamProject}
+              text="Join Project "
+              emoji="rainbow"
+            />
+          )}
+          {props.currentUserIsOnProject && (
+            <PopoverButton
+              onClick={leaveTeamProject}
               text="Leave Project "
               emoji="wave"
             />
-          </section>
-        )}
+          )}
+        </section>
+      )}
+
+      {props.leaveProject &&
+        props.project.users.length > 1 && (
+        <section className="pop-over-actions collaborator-actions">
+          <PopoverButton
+            onClick={leaveProject}
+            text="Leave Project "
+            emoji="wave"
+          />
+        </section>
+      )}
 
       {props.currentUserIsOnProject &&
         !props.removeProjectFromCollection && (
-          <section className="pop-over-actions danger-zone last-section">
-            {!!props.removeProjectFromTeam && (
-              <PopoverButton
-                onClick={() => props.removeProjectFromTeam(props.project.id)}
-                text="Remove Project "
-                emoji="thumbs_down"
-              />
-            )}
-            {!!props.removeProject &&
+        <section className="pop-over-actions danger-zone last-section">
+          {!!props.removeProjectFromTeam && (
+            <PopoverButton
+              onClick={() => props.removeProjectFromTeam(props.project.id)}
+              text="Remove Project "
+              emoji="thumbs_down"
+            />
+          )}
+          {!!props.removeProject &&
               props.removeProjectFromTeam && (
-                <PopoverButton
-                  onClick={() => props.removeProject(props.project)}
-                  text="Remove Project "
-                  emoji="thumbs_down"
-                />
-              )}
+            <PopoverButton
+              onClick={() => props.removeProject(props.project)}
+              text="Remove Project "
+              emoji="thumbs_down"
+            />
+          )}
 
-            {props.currentUserIsOnProject &&
+          {props.currentUserIsOnProject &&
               !props.removeProjectFromCollection && (
-                <PopoverButton
-                  onClick={animateThenDeleteProject}
-                  text="Delete Project "
-                  emoji="bomb"
-                />
-              )}
-          </section>
-        )}
+            <PopoverButton
+              onClick={animateThenDeleteProject}
+              text="Delete Project "
+              emoji="bomb"
+            />
+          )}
+        </section>
+      )}
       {props.removeProjectFromCollection && (
         <section className="pop-over-actions danger-zone last-section">
           {props.removeProjectFromCollection && (

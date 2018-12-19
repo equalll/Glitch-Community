@@ -6,7 +6,7 @@ import {OptimisticValue, TrimmedValue, FieldErrorIcon, FieldErrorMessage} from '
 
 
 class PureEditableFieldHolder extends React.Component {
-   constructor(props) {
+  constructor(props) {
     super(props);
     this.state = { id: uniqueId("editable-field-") };
     this.textInput = React.createRef();
@@ -84,7 +84,7 @@ export const PureEditableTextArea = (props) => (
       <textarea {...inputProps} ref={inputRef} />  
     )}
   </PureEditableFieldHolder>
-  );
+);
 
 PureEditableTextArea.propTypes = {
   value: PropTypes.string.isRequired,
@@ -104,7 +104,7 @@ export const PureEditableField = (props) => (
       <input {...inputProps} ref={inputRef} />  
     )}
   </PureEditableFieldHolder>
-  );
+);
 
 PureEditableField.propTypes = {
   value: PropTypes.string.isRequired,

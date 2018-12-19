@@ -12,7 +12,7 @@ PopoverButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   text: PropTypes.node.isRequired,
   emoji: PropTypes.string.isRequired,
-}
+};
 
 export default PopoverButton;
 
