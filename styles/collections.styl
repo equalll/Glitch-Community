@@ -97,14 +97,6 @@ collection-avatar-size = 55px
     transition: 0.1s all
     overflow: visible
     background-color: secondary-background
-    &:hover
-      .button
-        background-color: secondary-background
-        box-shadow: 2px 2px 0 primary
-    &:active
-      .button
-        background-color: secondary-background-active
-        box-shadow: none
 
     a
       color: primary
@@ -246,7 +238,6 @@ collection-avatar-size = 55px
     width: initial
 
 .collection-options
-  display: none
   position: absolute
   right: 0px
   top: 4px
@@ -259,14 +250,4 @@ collection-avatar-size = 55px
   &:focus
     outline: transparent
     background: #efefef
-
-.user-page .projects-container > li, .user-page .collections-container > li
-  // Permit a 2-column layout on the user-page
-  // in between mediumViewport and largeViewport
-  @media (max-width: largeViewport)
-    width: 48%
-        
-  @media (max-width: mediumViewport)
-    width: 100%
-  
     

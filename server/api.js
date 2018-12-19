@@ -2,11 +2,11 @@
 
 const axios = require("axios");
 const {Cache} = require("memory-cache");
-const moment = require("moment-mini");
+const dayjs = require("dayjs");
 
 const {API_URL} = require("./constants").current;
 
-const CACHE_TIMEOUT = moment.duration(15, 'minutes').asMilliseconds()
+const CACHE_TIMEOUT = dayjs.convert(15, 'minutes', 'ms');
 
 const generalCache = new Cache();
 const projectCache = new Cache();

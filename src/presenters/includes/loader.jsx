@@ -50,7 +50,7 @@ DataLoader.propTypes = {
   children: PropTypes.func.isRequired,
   get: PropTypes.func.isRequired,
   renderError: PropTypes.func,
-  renderLoader: PropTypes.func, 
+  renderLoader: PropTypes.func,
 };
 DataLoader.defaultProps = {
   renderError: () => 'Something went wrong, try refreshing?',

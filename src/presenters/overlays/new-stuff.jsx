@@ -69,7 +69,12 @@ class NewStuff extends React.Component {
   renderOuter({visible, setVisible}) {
     const {children, isSignedIn, showNewStuff, newStuffReadId} = this.props;
     const dogVisible = isSignedIn && showNewStuff && (newStuffReadId < latestId);
-    const show = () => this.showNewStuff(setVisible);
+    const show = () => {
+      if(window.analytics) {
+        window.analytics.track("Pupdate");
+      }
+      this.showNewStuff(setVisible);
+    };
     return (
       <>
         {children(show)}

@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Vera Molnár in Audio Form',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_hearing-vera-molnar.png?1543839845270",
-    link: 'https://glitch.com/~hearing-vera-molnar'
+    title: 'Play Piano Like a Virtuoso',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F1_2.jpg?1545054763363",
+    link: 'https://glitch.com/~piano-genie'
   },{
-    title: 'Handsfree.js Starter Kit',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_handsfree-starter.png?1543839845139",
-    link: 'https://glitch.com/~handsfree-starter'
+    title: 'Chinese Ideograms and Radicals',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F2_2.jpg?1545054763728",
+    link: 'https://glitch.com/~chinese-radical-vis'
   },{
-    title: 'Generate Circle Chord Patterns',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_chord-machine.png?1543839845017",
-    link: 'https://glitch.com/~chordmachine'
+    title: 'Make Your Own Code Walkthroughs',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F3_1.jpg?1545054763940",
+    link: 'https://glitch.com/~walkthrough'
   }  
 ];

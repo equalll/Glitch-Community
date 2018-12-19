@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const {Provider, Consumer} = React.createContext();
 
-export default class NestedPopover extends React.Component {
+export class NestedPopover extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -75,13 +75,13 @@ class AddProjectToCollectionPop extends React.Component {
         coverColor,
       });
 
-      const newCollection = data;
+      const newCollection = {user: this.props.currentUser, ...data};
 
       // add the selected project to the collection
       await this.props.api.patch(`collections/${newCollection.id}/add/${this.props.project.id}`);         
       
       // redirect to that collection
-      const newCollectionUrl = getLink(this.props.currentUser.login, newCollection.url);
+      const newCollectionUrl = getLink(newCollection);
       this.setState({newCollectionUrl});
     }catch(error){
       if (error && error.response && error.response.data && error.response.data.message) {

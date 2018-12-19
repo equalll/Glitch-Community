@@ -2,8 +2,15 @@
 
 // Import Sentry early to help it initialize.
 import {configureScope} from './utils/sentry';
-
 import './polyfills.js';
+
+// Init our dayjs plugins
+import dayjs from 'dayjs';
+import relativeTimePlugin from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTimePlugin);
+import convertPlugin from '../shared/dayjs-convert';
+dayjs.extend(convertPlugin);
+
 import React from 'react';
 import {render} from 'react-dom';
 import App from './app.jsx';

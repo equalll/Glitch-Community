@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom';
 
 import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
-import {getContrastTextColor, getLink, hexToRgbA} from '../../models/collection';
+import {getContrastTextColor, getLink, getOwnerLink, hexToRgbA} from '../../models/collection';
 
 import {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
@@ -20,12 +20,13 @@ import EditCollectionNameAndUrl from '../includes/edit-collection-name-and-url.j
 import AddCollectionProject from '../includes/add-collection-project.jsx';
 
 import CollectionAvatar from '../includes/collection-avatar.jsx';
-import {UserTile} from '../users-list.jsx';
+import {TeamTile} from '../teams-list';
+import {UserTile} from '../users-list';
 
 import {CurrentUserConsumer} from '../current-user.jsx';
 
-function syncPageToUrl(owner, url) {
-  history.replaceState(null, null, getLink(owner, url));
+function syncPageToUrl(collection, url) {
+  history.replaceState(null, null, getLink({...collection, url}));
 }
 
 class DeleteCollectionBtn extends React.Component {
@@ -37,7 +38,7 @@ class DeleteCollectionBtn extends React.Component {
   } 
   render(){
     if(this.state.done){
-      return <Redirect to={`/@${this.props.currentUserLogin}`} />;
+      return <Redirect to={getOwnerLink(this.props.collection)} />;
     }
     return (
       <button className={`button delete-collection button-tertiary`} 
@@ -59,8 +60,12 @@ class DeleteCollectionBtn extends React.Component {
 }
 
 DeleteCollectionBtn.propTypes = {
+  collection: PropTypes.shape({
+    team: PropTypes.object,
+    user: PropTypes.object,
+    url: PropTypes.string.isRequired,
+  }).isRequired,
   deleteCollection: PropTypes.func.isRequired,
-  currentUserLogin:PropTypes.string.isRequired,
 };
 
 const CollectionPageContents = ({
@@ -74,7 +79,6 @@ const CollectionPageContents = ({
   addProjectToCollection, 
   removeProjectFromCollection,
   updateColor,
-  userLogin,
   ...props}) => (
   
   <>  
@@ -89,11 +93,12 @@ const CollectionPageContents = ({
           </div>
           
           <EditCollectionNameAndUrl isAuthorized={isAuthorized}
-            owner={collection.user.login} name={collection.name} url={collection.url}
-            update={data => updateNameAndUrl(data).then(() => syncPageToUrl(collection.user.login, data.url))}
+            name={collection.name} url={collection.url}
+            update={data => updateNameAndUrl(data).then(() => syncPageToUrl(collection, data.url))}
           />
           
-          <UserTile {...collection.user}/>
+          {collection.team && <TeamTile team={collection.team}/>}
+          {collection.user && <UserTile {...collection.user}/>}
           
           <div className="collection-description">
             <AuthDescription
@@ -102,11 +107,10 @@ const CollectionPageContents = ({
             />
           </div>
           
-          {(isAuthorized && <EditCollectionColor
+          {isAuthorized && <EditCollectionColor
             update={updateColor}
             initialColor={collection.coverColor}
-          />
-          )}
+          />}
           
         </header>
         
@@ -174,7 +178,7 @@ const CollectionPageContents = ({
       </article>
       
     </main>
-   {isAuthorized && <DeleteCollectionBtn deleteCollection={deleteCollection} currentUserLogin={userLogin}/>}
+   {isAuthorized && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection}/>}
   </>
 );
 
@@ -196,6 +200,18 @@ CollectionPageContents.propTypes = {
   uploadAvatar: PropTypes.func,
 };
 
+const getOrNull = async(api, route) => {
+  try {
+    const {data} = await api.get(route);
+    return data;
+  } catch (error) {
+    if (error && error.response && error.response.status === 404) {
+      return null;
+    }
+    throw error;
+  }
+};
+
 async function getUserIdByLogin(api, userLogin){
   const {data} = await api.get(`userid/byLogin/${userLogin}`);
   if(data === "NOT FOUND"){
@@ -204,48 +220,51 @@ async function getUserIdByLogin(api, userLogin){
   return data;
 }
 
-async function getCollectionId(api, userId, collectionName){
-  // parse through user's collections to find collection that matches the name of the collection
-  const {data} = await api.get(`collections?userId=${userId}`);
-  const collectionMatch = data.find(c => c.url == collectionName);
-  return collectionMatch.id;  
-}
-
-async function getCollection(api, collectionId){
-  const {data} = await api.get(`collections/${collectionId}`);
-  return data;
-}
-
-async function loadCollection(api, userLogin, collectionName){
+async function loadCollection(api, ownerName, collectionName){
+  let collections = [];
   
-  // get userId by login name
-  const userId = await getUserIdByLogin(api,userLogin);
+  // get team by url
+  const team = await getOrNull(api, `teams/byUrl/${ownerName}`);
+  if (team) {
+    const {data} = await api.get(`collections?teamId=${team.id}`);
+    collections = data;
+  } else {
+    
+    // get userId by login name
+    const userId = await getUserIdByLogin(api, ownerName);
+    if (userId) {
+      const {data} = await api.get(`collections?userId=${userId}`);
+      collections = data;
+    }
+  }
   
-  // get collection id
-  const collectionId = await getCollectionId(api, userId, collectionName);
+  // pick out the correct collection, then load the full data
+  const collectionMatch = collections.find(c => c.url == collectionName);
+  const collection = collectionMatch && await getOrNull(api, `collections/${collectionMatch.id}`);
+  if (!collection) return null;
   
-  // get collection
-  const collection = await getCollection(api, collectionId);
+  // inject the full team so we get their projects and members
+  if (team) {
+    collection.team = team;
+  }
   
   return collection;
 }  
 
-const CollectionPage = ({api, userLogin, name, ...props}) => (
+const CollectionPage = ({api, ownerName, name, ...props}) => (
   <Layout api={api}>
-    <DataLoader get={() => loadCollection(api, userLogin, name)}
-      renderError={() => <NotFound name={name}/>}
-    >
-      {collection => (
+    <DataLoader get={() => loadCollection(api, ownerName, name)}>
+      {collection => collection ? (
         <CurrentUserConsumer>
           {(currentUser) => (
             <CollectionEditor api={api} initialCollection={collection} >
               {(collection, funcs, userIsAuthor) =>(
-                <CollectionPageContents collection={collection} userLogin={userLogin} api={api} currentUser={currentUser} isAuthorized={userIsAuthor} {...funcs} {...props}/>
+                <CollectionPageContents collection={collection} api={api} currentUser={currentUser} isAuthorized={userIsAuthor} {...funcs} {...props}/>
               )}
             </CollectionEditor>
           )}
         </CurrentUserConsumer>
-      )}
+      ) : <NotFound name={name}/>}
     </DataLoader>
   </Layout>
 );

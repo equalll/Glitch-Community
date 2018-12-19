@@ -110,7 +110,11 @@ class AddCollectionProjectPop extends React.Component {
   
   loadRecentProjects(){
     const MAX_PROJECTS = 20;
-    this.setState({ maybeResults: this.props.currentUser.projects.slice(0,MAX_PROJECTS) });
+    if (this.props.collection.team && this.props.collection.team.projects) {
+      this.setState({ maybeResults: this.props.collection.team.projects.slice(0,MAX_PROJECTS) });
+    } else {
+      this.setState({ maybeResults: this.props.currentUser.projects.slice(0,MAX_PROJECTS) });
+    }
   }
   
   handleChange(evt) {

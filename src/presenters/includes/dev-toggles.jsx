@@ -16,8 +16,8 @@ const {Provider, Consumer} = React.createContext();
 // Users can enable them with the /secret page.
 const toggleData = [
   {name: "Email Invites", description: "Enables invite-by-email behavior on the team page."},
-  {name: "Email Login", description: "Enables the login-by-email UI"},
-  {name: "Peace of Mind", description: "I'm a placeholder for a future toggle"},
+  {name: "Everybody Dance!", description: "Placeholder for a new toggle."},
+  {name: "Team Collections", description: "Co-op mode for collections"},
 ].splice(0,3); // <-- Yeah really, only 3.  If you need more, clean up one first.
 
 

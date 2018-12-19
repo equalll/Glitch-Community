@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
-import moment from 'moment-mini';
+import dayjs from 'dayjs';
 
 import Link from '../includes/link';
 import LocalStorage from '../includes/local-storage';
 import PopoverWithButton from './popover-with-button';
-import {DevToggles} from '../includes/dev-toggles';
+import {captureException} from '../../utils/sentry';
+import {NestedPopover, NestedPopoverTitle} from './popover-nested.jsx';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
@@ -32,57 +33,103 @@ const SignInPopButton = (props) => (
   </Link>
 );
 
-const jankyEmailPrompt = async (api) => {
-  const email = window.prompt("We'll send you a login link.\n\nWhat's your email address?");
-  if(!email) {
-    // blank or cancelled.
-    return;
+class EmailHandler extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      done: false,
+      error: false
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    
   }
+  
+  onChange(e) {
+    this.setState({email: e.target.value});
 
-  try {
-    await api.post('/email/sendLoginEmail', {emailAddress:email});
-    alert("Please check your email at " + email);
-  } catch (error) {
-    console.error(error);
-    alert("Something went wrong; email not sent.");
   }
-};
+  
+  async onSubmit(e) {
+    e.preventDefault();
+    this.setState({done: true});
+    try {
+      await this.props.api.post('/email/sendLoginEmail', {emailAddress:this.state.email});
+      this.setState({error: false});
+    } catch (error) {
+      captureException(error);
+      this.setState({error: true});
+    }
+  }
+   
+  render() {
+    const isEnabled = this.state.email.length > 0;
+    return (
+      <dialog className="pop-over sign-in-pop">
+        <NestedPopoverTitle>
+          Email Sign In <span className="emoji email" />
+        </NestedPopoverTitle>
+        <section className="pop-over-actions first-section">
+          {!this.state.done &&
+            <form onSubmit={this.onSubmit} style={{marginBottom: 0}}>
+              <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
+              <button style={{marginTop: 10}} className="button-small button-link" disabled={!isEnabled}>Send Link</button>
+            </form>
+          }
+          {(this.state.done && !this.state.error) &&
+            <>
+              <div className="notification notifySuccess">Almost Done</div>
+              <div>Please click the confirmation link sent to {this.state.email}.</div>
+            </>
+          }
+          {(this.state.done && this.state.error) &&
+            <>
+              <div className="notification notifyError">Error</div>
+              <div>Something went wrong, email not sent.</div>
+            </>
+          }       
+        </section>
+      </dialog>
+    );
+  }
+}
 
-const EmailSignInButton = ({api, onClick}) => (
-  <button className="button-small button-link has-emoji" onClick={() => { onClick(); jankyEmailPrompt(api); }}>
-    Sign in with Email <span aria-label="" role="img">📧</span>
+const EmailSignInButton = ({onClick}) => (
+  <button className="button button-small button-link has-emoji" onClick={() => {onClick();}}>
+    Sign in with Email <span className="emoji email"></span>
   </button>
 );
-
 EmailSignInButton.propTypes = {
-  api: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
-const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
+const SignInPopWithoutRouter = (props) => (
   <LocalStorage name="destinationAfterAuth">
     {(destination, setDestination) => {
       const onClick = () => setDestination({
-        expires: moment().add(10, 'minutes').toISOString(),
+        expires: dayjs().add(10, 'minutes').toISOString(),
         to: {
           pathname: location.pathname,
           search: location.search,
           hash: hash,
         },
       });
+      const {header, prompt, api, location, hash} = props;
       return (
-        <div className="pop-over sign-in-pop">
-          {header}
-          <section className="pop-over-actions last-section">
-            {prompt}
-            <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
-            <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
-            <DevToggles>
-              {(enabledToggles) => (
-                enabledToggles.includes("Email Login") && <EmailSignInButton api={api} onClick={onClick}/>
-              )}
-            </DevToggles>
-          </section>
-        </div>
+        <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
+          {showEmailLogin => 
+            <div className="pop-over sign-in-pop">
+              {header}
+              <section className="pop-over-actions first-section">
+                {prompt}
+                <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
+                <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
+                <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
+              </section>
+            </div>
+          }
+        </NestedPopover>
       );
     }}
   </LocalStorage>
@@ -97,7 +144,7 @@ SignInPop.propTypes = {
 };
 
 export default function SignInPopContainer(props) {
-  return <PopoverWithButton buttonClass='button' buttonText='Sign in'>
+  return <PopoverWithButton buttonClass='button button-small' buttonText='Sign in' passToggleToPop>
       <SignInPop {...props}/>
     </PopoverWithButton>;
 }

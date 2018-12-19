@@ -7,7 +7,7 @@
     height: 350px
     margin-top: 55px
     float: left
-    .witch
+    .kiki
       max-width: 100%
       max-height: 100%
       &.large
@@ -18,13 +18,14 @@
       cursor: pointer
       .play-button
         vertical-align: -4px
-        margin-right: 5px  
+        margin-right: 5px 
         height: 17px
         
   .callouts
-    width: 45%
-    float: left
+    width: 43%
+    float: right
     display: inline
+    margin-right: 50px
     .callout
       position: relative
       &.discover
@@ -33,9 +34,14 @@
         .window
           top: 90px
           left: 50px
+          border-color: #DED9FF
         .badge
           top: 25px
-          right: 90px
+          right: 60px
+        .description
+          background: #DED9FF
+          border-color: #B8AFFF
+          
       &.remix
         .title
           background: #9FD6FF
@@ -45,14 +51,22 @@
         .window
           top: 195px
           right: 25px
+          border-color: #9FD6FF
+        .description
+          background-color: #D6EEFF
+          border-color: #9FD6FF
       &.collaborate
         .title
-          background: #FCF3B0
+          background: #FFAABF
         .badge
-          top: 380px
-          right: 125px
+          top: 360px
+          right: 100px
         .window
           top: 300px
+          border-color: #FFAABF
+        .description
+          border-color: #FFAABF
+          background-color: #F8D8E0
       .badge
         position: absolute
         z-index: 1
@@ -63,10 +77,10 @@
           position: relative
           margin: 0
           padding: 10px 15px
-          border: 2px solid black
+          border-width: 2px
           border-top-right-radius: 5px
           border-top-left-radius: 5px
-          font-weight: 600
+          font-weight: 700
           .dots
             position: absolute
             right: 11px 
@@ -86,22 +100,23 @@
                 background: #FF5F5F
             
         .description
-          background: white
           padding: 15px 15px 25px
-          border-left: 2px solid black
-          border-bottom: 2px solid black
-          border-right: 2px solid black
+          border-left-width: 2px 
+          border-bottom-width: 2px 
+          border-right-width: 2px 
+          border-style: solid
+          border-top: none
           border-bottom-left-radius: 5px
           border-bottom-right-radius: 5px
 
 // > 1080px
-// Callouts located on right, irregularly stacked; large witch visible
+// Calklouts located on right, irregularly stacked; large kiki visible
 @media (min-width: hugeViewport)
   .what-is-glitch
     figure
       width: 48%
       margin: 55px 0
-      .witch
+      .kiki
         &.small
           display: none
         &.large
@@ -112,23 +127,22 @@
         top: 250px
         left: 55%
     .callouts
-      float: left     
+      float: right        
 
 // 1080px
-// Callouts located on right of page; small witch visible
+// Callouts located on right of page; small kiki visible
 @media (max-width: hugeViewport)
   .what-is-glitch
     figure
       width: 45%
       margin-top: 0
-      .witch
+      .kiki
         &.small
           width: 93%
     .callouts
       margin-right: 2vw
       display: flex
       flex-direction: column
-      width: 40%
       .callout
         display: flex
         flex-direction: row-reverse
@@ -140,14 +154,14 @@
           position: initial
 
 // 900px
-// Callouts located on right of page, stacked; small witch visible
+// Callouts located on right of page, stacked; small kiki visible
 @media (max-width: largeViewport)
   .what-is-glitch
     height: 850px
     figure
       width: 95%
       height: 50vw
-      .witch
+      .kiki
         &.small
           display: none
         &.large
@@ -159,26 +173,25 @@
         left: 55%
     .callouts
       width: 96%
-      margin-left: 1em
+      margin-right: 0px
       .callout
-        margin: 1em 0em -1em
+        margin: 1em 0em 0em
         .badge
           position: initial
           float: right
           margin-left: -20px
-          margin-top: 2.5%
         .window
           position: initial
           width: 100%
 
 // 670px
-// Callouts should be stacked, large witch visible
+// Callouts should be stacked, large kiki visible
 @media(max-width: mediumViewport)
   .what-is-glitch
     figure
       margin-top: 1em
       width: 90%
-      .witch
+      .kiki
         &.small
           display: none
         &.large 
@@ -201,14 +214,14 @@
             margin-left: -20px
 
 // 592px
-// Callouts should be stacked, large witch visible
+// Callouts should be stacked, large kiki visible
 @media(max-width: mediumSmallViewport)
   .what-is-glitch
     figure
       margin: 0
       width: 100%
-      height: 70vw
-      .witch
+      height: 82vw
+      .kiki
         &.small
           display: block
         &.large 
@@ -231,14 +244,13 @@
         
 
 // 414px
-// Callouts should be stacked, small witch visible
+// Callouts should be stacked, small kiki visible
 @media(max-width: smallViewport)
   .what-is-glitch
-    height: auto
     figure
       margin-top: 0px
       height: 74vw
-      .witch
+      .kiki
         &.small
           display: block
           width: 100%
@@ -260,3 +272,9 @@
             margin-left: -20px
           .description
             padding: 15px 25px 25px 15px
+          
+// smallViewport = 414px
+// mediumSmallViewport = 592px
+// mediumViewport = 670px
+// largeViewport = 900px
+// hugeViewport = 1080px

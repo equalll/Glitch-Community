@@ -17,7 +17,7 @@ import {TeamPage, UserPage, TeamOrUserPage} from './team-or-user.jsx';
 import SearchPage from './search.jsx';
 import CategoryPage from './category.jsx';
 import CollectionPage from './collection.jsx';
-import NotFoundPage from './404.jsx';
+import {NotFoundPage} from './error.jsx';
 import SecretPage from './secret.jsx';
 
 /* global EXTERNAL_ROUTES */
@@ -41,6 +41,15 @@ class PageChangeHandlerBase extends React.Component {
     if (this.props.location.key !== prev.location.key) {
       window.scrollTo(0, 0);
       this.props.reloadCurrentUser();
+      
+      try {
+        const analytics = window.analytics;
+        if (analytics) {
+          analytics.page();
+        }
+      } catch (ex) {
+        console.error("Error tracking page transition.", ex);
+      }
     }
   }
   render() {
@@ -72,7 +81,7 @@ const Router = ({api}) => (
 
       <Route path="/@:name" exact render={({location, match}) => <TeamOrUserPage key={location.key} api={api} name={match.params.name}/>}/>
 
-      <Route path="/@:user/:name" exact render={({location, match}) => <CollectionPage key={location.key} api={api} userLogin={match.params.user} name={match.params.name}/>}/>
+      <Route path="/@:owner/:name" exact render={({location, match}) => <CollectionPage key={location.key} api={api} ownerName={match.params.owner} name={match.params.name}/>}/>
 
       <Route path="/user/:id(\d+)" exact render={({location, match}) => <UserPage key={location.key} api={api} id={parseInt(match.params.id, 10)} name={`user ${match.params.id}`}/>}/>
 

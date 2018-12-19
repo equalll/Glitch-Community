@@ -7,7 +7,27 @@ import {captureMessage} from '../../utils/sentry';
 import {Redirect} from 'react-router-dom';
 import LocalStorage from '../includes/local-storage';
 import {CurrentUserConsumer} from '../current-user';
-import ErrorPage from './error';
+import {EmailErrorPage, OauthErrorPage} from './error';
+
+// The Editor may embed /login/* endpoints in an iframe in order to share code.
+// NotifyParent allows the editor to receive messages from this page.
+// We use this to pass on auth success/failure messages.
+function notifyParent(message={}) {
+  if(window.parent === window) {
+    return;
+  }
+
+  // Specifically target our same origin;
+  // we're only communicating between the editor and its corresponding ~community site,
+  // not across other environments.
+  const sameOrigin = window.origin;
+  
+  // Add 'LoginMessage' to all messages of this type so that the Editor
+  // can filter for them specifically.
+  message.type = "LoginMessage";
+  
+  window.parent.postMessage(message, sameOrigin);
+}
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -39,7 +59,7 @@ class LoginPage extends React.Component {
       
       this.setState({done: true});
       analytics.track("Signed In", {provider});
-      
+      notifyParent({success: true, details: {provider}});
     } catch (error) {
       this.setState({error: true});
       
@@ -48,9 +68,10 @@ class LoginPage extends React.Component {
         this.setState({errorMessage: errorData.message});
       }
       
-      const deets = {provider, error: errorData};
-      console.error("Login error.", deets);
-      captureMessage("Login error", {extra: deets});
+      const details = {provider, error: errorData};
+      console.error("Login error.", details);
+      captureMessage("Login error", {extra: details});
+      notifyParent({success: false, details});
     }
   }
   
@@ -59,7 +80,10 @@ class LoginPage extends React.Component {
       return <Redirect to={this.state.redirect}/>;
     } else if (this.state.error) {
       const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
-      return <ErrorPage title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription}/>;
+      if (this.props.provider === "Email") {
+        return <EmailErrorPage api={this.props.api} title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription}/>;
+      }
+      return <OauthErrorPage api={this.props.api} title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription}/>;
     }
     return <div className="content"></div>;
   }

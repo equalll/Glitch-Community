@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment-mini';
+import dayjs from 'dayjs';
 
 export default class Logo extends React.PureComponent {
   
@@ -15,7 +15,7 @@ export default class Logo extends React.PureComponent {
       this.setState({
         hour: (new Date()).getHours(),
       });
-    }, moment.duration(5, 'minutes').asMilliseconds());
+    }, dayjs.convert(5, 'minutes', 'ms'));
   }
 
   componentWillUnmount() {

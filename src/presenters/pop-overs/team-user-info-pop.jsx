@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {getAvatarThumbnailUrl} from '../../models/user';
 
-import NestedPopover from './popover-nested.jsx';
+import {NestedPopover} from './popover-nested.jsx';
 import {UserLink} from '../includes/link.jsx';
 import Thanks from '../includes/thanks.jsx';
 

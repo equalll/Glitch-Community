@@ -58,11 +58,11 @@ FeaturedPanel.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-const Featured = ({embedHtml, featured}) => (
+const Featured = ({embedHtml, featured, isAuthorized}) => (
   <section className="featured featured-collections">
     <h2>Check These Out</h2>
     <div className="community-pick-embed-container">
-      <img className="witch" src={imgWitch} width="110px" height="82px" alt=""/>
+      { isAuthorized && <img className="witch" src={imgWitch} width="110px" height="82px" alt=""/> }
       <span dangerouslySetInnerHTML={{__html: embedHtml}}/>
     </div>
     
@@ -82,10 +82,15 @@ const Featured = ({embedHtml, featured}) => (
 Featured.propTypes = {
   embedHtml: PropTypes.string.isRequired,
   featured: PropTypes.array.isRequired,
+  isAuthorized: PropTypes.bool,
 };
 
-const FeaturedContainer = () => (
-  <Featured embedHtml={EmbedHtml} featured={FeaturedItems}/>
+const FeaturedContainer = ({isAuthorized}) => (
+  <Featured embedHtml={EmbedHtml} featured={FeaturedItems} isAuthorized={isAuthorized}/>
 );
+
+FeaturedContainer.propTypes = {
+  isAuthorized: PropTypes.bool,
+};
 
 export default FeaturedContainer;

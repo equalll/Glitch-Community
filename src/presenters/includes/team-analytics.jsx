@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment-mini';
+import dayjs from 'dayjs';
 import _ from 'lodash';
 import sampleAnalytics, {sampleAnalyticsTime} from '../../curated/sample-analytics';
 
@@ -14,30 +14,18 @@ import TeamAnalyticsReferrers from '../includes/team-analytics-referrers.jsx';
 import TeamAnalyticsProjectDetails from '../includes/team-analytics-project-details.jsx';
 
 const dateFromTime = (newTime) => {
-  const timeMap = [
-    {
-      time: "Last 4 Weeks",
-      date: moment().subtract(4, 'weeks').valueOf(),
-    },
-    {
-      time: "Last 2 Weeks",
-      date: moment().subtract(2, 'weeks').valueOf(),
-    },
-    {
-      time: "Last 24 Hours",
-      date: moment().subtract(24, 'hours').valueOf(),
-    },
-  ];
-  let time = _.find(timeMap, (object) => {
-    return object.time === newTime;
-  });
-  return time.date;
+  const timeMap = {
+    "Last 4 Weeks": dayjs().subtract(4, 'weeks').valueOf(),
+    "Last 2 Weeks": dayjs().subtract(2, 'weeks').valueOf(),
+    "Last 24 Hours": dayjs().subtract(24, 'hours').valueOf(),
+  };
+  return timeMap[newTime];
 };
 
 const getAnalytics = async ({id, api, projects}, fromDate, currentProjectDomain) => {
   if (!projects.length) {
-    // Update timestamps so they're relative to now
     const data = _.cloneDeep(sampleAnalytics);
+    // Update timestamps so they're relative to now
     data.buckets.forEach(bucket => {
       bucket['@timestamp'] += Date.now() - sampleAnalyticsTime;
     });
@@ -58,9 +46,10 @@ const getAnalytics = async ({id, api, projects}, fromDate, currentProjectDomain)
 class TeamAnalytics extends React.Component {
   constructor(props) {
     super(props);
+    const currentTimeFrame = 'Last 2 Weeks';
     this.state = {
-      currentTimeFrame: 'Last 2 Weeks',
-      fromDate: moment().subtract(2, 'weeks').valueOf(),
+      currentTimeFrame,
+      fromDate: dateFromTime(currentTimeFrame),
       currentProjectDomain: '', // empty string means all projects
       analytics: {},
       c3: {},
@@ -156,7 +145,16 @@ class TeamAnalytics extends React.Component {
     }
     return (
       <section className="team-analytics">
-        <h2>Analytics</h2>
+        <h2>
+          Analytics
+          { (this.props.projects.length === 0) && !this.state.isGettingData && (
+            <aside className="inline-banners team-page">
+              Add projects to see their stats
+            </aside>
+          )}
+        </h2>
+
+        
         { !!this.props.projects.length && (
           <section className="controls">
             <TeamAnalyticsProjectPop
@@ -179,13 +177,7 @@ class TeamAnalytics extends React.Component {
             />
           }
         </section>
-
-        { (this.props.projects.length === 0) && !this.state.isGettingData && (
-          <aside className="inline-banners add-project-to-analytics-banner">
-            Add projects to see their stats
-          </aside>
-        )}
-
+        
         <section className="activity">
           <figure id="chart" className="c3"/>
           { (this.state.isGettingData || this.state.isGettingC3) && 

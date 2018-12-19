@@ -1,3 +1,5 @@
+/* global analytics */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -14,7 +16,6 @@ const NewProjectPop = ({projects}) => (
         {projects.length ? projects.map((project) => (
           <Link key={project.id} to={getRemixUrl(project.domain)}>
             <ProjectResultItem {...project} cdnUrl="https://cdn.glitch.com" users={[]} action={()=>{
-              /* global analytics */
               analytics.track("New Project Clicked", {
                 baseDomain: project.domain,
                 origin: "community new project pop",

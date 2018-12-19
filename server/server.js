@@ -21,6 +21,9 @@ try {
   console.error('Failed to initialize Sentry!', error);
 }
 
+// Extend dayjs with our conversion plugin
+require('dayjs').extend(require('../shared/dayjs-convert'));
+
 const app = express();
 
 app.use(Sentry.Handlers.requestHandler());

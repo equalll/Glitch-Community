@@ -15,7 +15,7 @@ export const ProjectItem = ({api, project, collectionColor, homepageCollection, 
     <li>
       <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams}/>      
       <ProjectOptionsPop {...{project, api}} {...props}/>
-      <ProjectLink project={project}>
+      <ProjectLink project={project} className="button-area">
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
           style={project.private ? {} : {backgroundColor: collectionColor, borderBottomColor:collectionColor}}
           data-track="project" data-track-label={project.domain}>

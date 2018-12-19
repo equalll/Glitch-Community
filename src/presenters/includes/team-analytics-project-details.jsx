@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment-mini';
+import dayjs from 'dayjs';
 
 import {ProjectLink} from './link.jsx';
 import Loader from './loader.jsx';
@@ -35,6 +35,9 @@ ProjectAvatar.propTypes = {
 };
 
 const ProjectDetails = ({projectDetails}) => {
+  // This uses dayjs().fromNow() a bunch of times
+  // That requires the relativeTime plugin
+  // Which is added to dayjs elsewhere
   return (
     <article className="project-details">
       <ProjectLink project={projectDetails}>
@@ -44,19 +47,19 @@ const ProjectDetails = ({projectDetails}) => {
         <tbody>
           <tr>
             <td className="label">Created</td>
-            <td>{moment(projectDetails.createdAt).fromNow()}</td>
+            <td>{dayjs(projectDetails.createdAt).fromNow()}</td>
           </tr>
           <tr>
             <td className="label">Last viewed</td>
-            <td>{moment(projectDetails.lastAccess).fromNow()}</td>
+            <td>{dayjs(projectDetails.lastAccess).fromNow()}</td>
           </tr>
           <tr>
             <td className="label">Last edited</td>
-            <td>{moment(projectDetails.lastEditedAt).fromNow()}</td>
+            <td>{dayjs(projectDetails.lastEditedAt).fromNow()}</td>
           </tr>
           <tr>
             <td className="label">Last remixed</td>
-            <td>{projectDetails.lastRemixedAt ? moment(projectDetails.lastRemixedAt).fromNow() : "never"}</td>
+            <td>{projectDetails.lastRemixedAt ? dayjs(projectDetails.lastRemixedAt).fromNow() : "never"}</td>
           </tr>
           <tr>
             <td className="label">Total app views</td>

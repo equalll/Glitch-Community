@@ -14,7 +14,7 @@ function addDefaultSrc(event) {
 export default function UserItem({user}) {
   const style = getProfileStyle({...user, size: 'medium'});
   return (
-    <UserLink user={user}>
+    <UserLink user={user} className="button-area">
       <div className="item" style={style}>
         <div className="content">
           <img onError={addDefaultSrc} className="avatar" src={getAvatarUrl(user)} alt=""></img>

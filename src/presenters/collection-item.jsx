@@ -1,22 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Pluralize from 'react-pluralize';
 
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import CollectionOptionsContainer from "./pop-overs/collection-options-pop.jsx";
-import Link from './includes/link';
+import { CollectionLink } from './includes/link';
+import Loader from './includes/loader';
 import CollectionAvatar from './includes/collection-avatar.jsx';
 
 import {getAvatarUrl} from '../models/project.js';
 
-import {getContrastTextColor, hexToRgbA} from '../models/collection.js';
+import {getContrastTextColor, hexToRgbA} from '../models/collection';
 
 const ProjectsPreview = ({projects}) => {
   
   return (
     <>
-      <ul className="projects-preview" projects={projects}>
+      <ul className="projects-preview">
         { projects.slice(0,3).map(project => (
-          <li key={project.id} className={"project-container " + (project.private ? "private" : null)}>
+          <li key={project.id} className={"project-container " + (project.private ? "private" : '')}>
             <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
             <div className="project-name">{project.domain}</div>
             <div className="project-badge private-project-badge" aria-label="private"></div>
@@ -24,7 +26,7 @@ const ProjectsPreview = ({projects}) => {
         )) }
       </ul>
       <div className="collection-link">
-        View {projects.length} {(projects.length > 0 ? 'projects' : 'project')} →
+        View <Pluralize count={projects.length} singular="project"/> →
       </div>
     </>
   );
@@ -40,7 +42,7 @@ class CollectionItem extends React.Component{
   }
   
   render(){
-    const {collection, deleteCollection, isAuthorized, userLogin} = this.props;
+    const {collection, deleteCollection, isAuthorized} = this.props;
     return (
       <li>
         {isAuthorized && (
@@ -48,9 +50,8 @@ class CollectionItem extends React.Component{
         )}
 
         {(collection &&
-          
-            <div className={['collection']} 
-              id={"collection-" + collection.id}>
+          <CollectionLink collection={collection} className="button-area">
+            <div className="collection" id={"collection-" + collection.id}>
               <div className="collection-container">
                 <div className="collection-info" style={{backgroundColor: collection.coverColor}}> 
                   <div className="avatar-container">
@@ -71,7 +72,7 @@ class CollectionItem extends React.Component{
                   <div className="overflow-mask"></div>
                 </div>
 
-                {(collection.projects.length > 0
+                {collection.projects ? (collection.projects.length > 0
                   ? <ProjectsPreview projects={collection.projects} color={collection.coverColor} collection={collection}/>
                   :
                   <div className="projects-preview empty">
@@ -80,9 +81,10 @@ class CollectionItem extends React.Component{
                       : <p>No projects to see in this collection just yet.</p>
                     )}
                   </div>
-                )}
+                ) : <div className="collection-link"><Loader/></div>}
               </div>
             </div>
+          </CollectionLink>
         )}
       </li>
     );
@@ -90,9 +92,9 @@ class CollectionItem extends React.Component{
 }
 
 CollectionItem.propTypes = {
+  collection: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func,
-  userLogin: PropTypes.string.isRequired,
 };
 
 export default CollectionItem;
