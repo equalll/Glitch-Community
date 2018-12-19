@@ -16,7 +16,7 @@ export class ReportAbusePop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reason: "",
+      reason: "This project doesn't belong on Glitch because...",
       email: "",
       emailError: "",
       reasonError: "",
@@ -178,13 +178,6 @@ ${secondHalf}`;
   }
 
   renderForm() {
-    const reasonLabel = (
-      <>
-        <p>This project doesn't belong on Glitch because...</p>
-        <hr />
-      </>
-    );
-
     return (
       <>
         <section className="pop-over-info">
@@ -198,7 +191,6 @@ ${secondHalf}`;
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             placeholder=""
             error={this.state.reasonError}
-            prefix={reasonLabel}
           />
         </section>
         {this.getUserInfoSection()}
