@@ -197,9 +197,7 @@ ${secondHalf}`;
         <section className="pop-over-actions">
           <button className="button" onClick={this.submitReport}>
             Submit Report{" "}
-            <span role="img" aria-label="">
-              📧
-            </span>
+            <span className="emoji email" role="img" aria-label=""/>
           </button>
         </section>
       </>
@@ -223,15 +221,11 @@ ${secondHalf}`;
     return this.renderSent(
       <>
         Report Sent{" "}
-        <span role="img" aria-label="">
-          📧
-        </span>
+        <span className="emoji email" role="img" aria-label=""/>
       </>,
       <p className="pop-description">
         Thanks for helping to keep Glitch a safe, friendly community!{" "}
-        <span role="img" aria-label="">
-          🏞
-        </span>
+        <span className="emoji park" role="img" aria-label=""/>
       </p>
     );
   }
@@ -240,9 +234,7 @@ ${secondHalf}`;
     return this.renderSent(
       <>
         Failed to Send{" "}
-        <span role="img" aria-label="">
-          🤒
-        </span>
+        <span className="emoji sick" role="img" aria-label=""/>
       </>,
       <>
         <p className="info-description">But you can still send us your message!
