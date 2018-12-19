@@ -4,7 +4,7 @@ import Pluralize from 'react-pluralize';
 
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import CollectionOptionsContainer from "./pop-overs/collection-options-pop.jsx";
-import { Link, CollectionLink } from './includes/link';
+import { CollectionLink } from './includes/link';
 import Loader from './includes/loader';
 import CollectionAvatar from './includes/collection-avatar.jsx';
 
@@ -50,7 +50,6 @@ class CollectionItem extends React.Component{
         )}
 
         {(collection &&
-          <CollectionLink collection={collection} className="button-area">
             <div className="collection" id={"collection-" + collection.id}>
               <div className="collection-container">
                 <div className="collection-info" style={{backgroundColor: collection.coverColor}}> 
@@ -60,12 +59,12 @@ class CollectionItem extends React.Component{
                     </div>
                   </div>
                   <div className="collection-name-description">
-                    <Link to={`/@${userLogin}/${collection.url}`}>                      
+                    <CollectionLink collection={collection} className="button-area">
                       <div className="button">
                         <span className="project-badge private-project-badge" aria-label="private"></span>
                         <div className="project-name">{collection.name}</div>
                       </div>
-                    </Link>
+                    </CollectionLink>
                     <div className="description" style={{color: getContrastTextColor(collection.coverColor)}}><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
                   </div>
 
@@ -84,7 +83,6 @@ class CollectionItem extends React.Component{
                 ) : <div className="collection-link"><Loader/></div>}
               </div>
             </div>
-          </CollectionLink>
         )}
       </li>
     );
