@@ -99,9 +99,9 @@ ${secondHalf}`;
           title: `Abuse Report for ${this.props.projectName}`
         }
       );
-      console.log(data);
       this.setState({ submitted: true, submitSuccess: true });
     } catch (error) {
+      console.log(error);
       captureException(error);
       this.setState({ submitted: true, submitSuccess: false });
     }
@@ -120,7 +120,7 @@ ${secondHalf}`;
 
   validateEmail() {
     if (this.props.currentUser.login) {
-      return;
+      return { emailError: "" };
     }
     
     let errors = this.validateNotEmpty("email", "emailError", "Email");
@@ -249,7 +249,7 @@ ${secondHalf}`;
           <br />
           Just copy the details below and email us at <b>support@glitch.com</b> and we'll respond right away.
         </p>
-      <textarea className="content-editable tall-text" value={_.trimStart(this.formatRaw())} /></>
+      <textarea className="content-editable tall-text" value={_.trimStart(this.formatRaw())} readOnly /></>
     );
   }
 
