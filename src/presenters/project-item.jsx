@@ -5,8 +5,8 @@ import {getAvatarUrl} from '../models/project.js';
 
 import {ProjectLink} from './includes/link.jsx';
 import {TruncatedMarkdown} from './includes/markdown.jsx';
-import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
-import UsersList from "./users-list.jsx";
+import ProjectOptionsPop from './pop-overs/project-options-pop.jsx';
+import UsersList from './users-list.jsx';
 
 import {getContrastTextColor} from '../models/collection.js'; 
 

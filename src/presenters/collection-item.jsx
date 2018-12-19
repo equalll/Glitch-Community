@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Pluralize from 'react-pluralize';
 
 import {TruncatedMarkdown} from './includes/markdown.jsx';
-import CollectionOptionsContainer from "./pop-overs/collection-options-pop.jsx";
+import CollectionOptionsContainer from './pop-overs/collection-options-pop.jsx';
 import { CollectionLink } from './includes/link';
 import Loader from './includes/loader';
 import CollectionAvatar from './includes/collection-avatar.jsx';

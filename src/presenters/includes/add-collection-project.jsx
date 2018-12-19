@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import AddCollectionProjectPop from '../pop-overs/add-collection-project-pop.jsx';
-import PopoverWithButton from "../pop-overs/popover-with-button";
+import PopoverWithButton from '../pop-overs/popover-with-button';
 
 const AddCollectionProject = ({currentUserIsOwner, ...props}) => {
   if(!currentUserIsOwner) {

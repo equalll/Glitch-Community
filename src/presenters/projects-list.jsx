@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProjectItem from "./project-item.jsx";
+import ProjectItem from './project-item.jsx';
 import Link from './includes/link';
 
 export const ProjectsList = ({title, placeholder, ...props}) => (

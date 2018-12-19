@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
-import CollectionItem from "./collection-item.jsx";
+import CollectionItem from './collection-item.jsx';
 import {defaultAvatar, getLink} from '../models/collection';
 import {getCollections, getPredicate} from '../models/words';
 import Loader from './includes/loader.jsx';

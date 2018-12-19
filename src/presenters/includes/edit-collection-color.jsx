@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import EditCollectionColorPop from "../pop-overs/edit-collection-color-pop.jsx";
-import PopoverWithButton from "../pop-overs/popover-with-button";
+import EditCollectionColorPop from '../pop-overs/edit-collection-color-pop.jsx';
+import PopoverWithButton from '../pop-overs/popover-with-button';
 
 const EditCollectionColor = ({ update, initialColor, ...props }) => (
   <PopoverWithButton

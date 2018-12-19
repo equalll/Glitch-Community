@@ -6,9 +6,9 @@ import {Redirect} from 'react-router-dom';
 import Link from './includes/link';
 import Logo from './includes/logo';
 
-import UserOptionsPop from "./pop-overs/user-options-pop";
-import SignInPop from "./pop-overs/sign-in-pop";
-import NewProjectPop from "./pop-overs/new-project-pop";
+import UserOptionsPop from './pop-overs/user-options-pop';
+import SignInPop from './pop-overs/sign-in-pop';
+import NewProjectPop from './pop-overs/new-project-pop';
 import NewStuffContainer from './overlays/new-stuff';
 import {CurrentUserConsumer} from './current-user';
 

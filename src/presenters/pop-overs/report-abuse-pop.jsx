@@ -1,16 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 import PopoverWithButton from './popover-with-button';
 import {
   PureEditableField,
   PureEditableTextArea
-} from "../includes/editable-field.jsx";
-import { parseOneAddress } from "email-addresses";
-import _ from "lodash";
-import axios from "axios";
+} from '../includes/editable-field.jsx';
+import { parseOneAddress } from 'email-addresses';
+import _ from 'lodash';
+import axios from 'axios';
 import {captureException} from '../../utils/sentry';
 
-import { CurrentUserConsumer } from "../current-user.jsx";
+import { CurrentUserConsumer } from '../current-user.jsx';
 
 export class ReportAbusePop extends React.Component {
   constructor(props) {
