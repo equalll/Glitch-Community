@@ -168,9 +168,8 @@ ${secondHalf}`;
           value={this.state.email}
           update={this.emailOnChange}
           blur={() => this.debouncedValidateEmail()}
-          placeholder=""
+          placeholder="your@email.com"
           error={this.state.emailError}
-          prefix="Your email (required)"
           inputType="email"
         />
       </section>
@@ -195,9 +194,8 @@ ${secondHalf}`;
         </section>
         {this.getUserInfoSection()}
         <section className="pop-over-actions">
-          <button className="button" onClick={this.submitReport}>
-            Submit Report{" "}
-            <span className="emoji email" role="img" aria-label=""/>
+          <button className="button button-small" onClick={this.submitReport}>
+            Submit Report
           </button>
         </section>
       </>
