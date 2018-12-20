@@ -92,7 +92,7 @@ ${secondHalf}`;
         return;
       }
 
-      const { data } = await axios.post(
+      await axios.post(
         "https://support-poster.glitch.me/post",
         {
           raw: this.formatRaw(),
