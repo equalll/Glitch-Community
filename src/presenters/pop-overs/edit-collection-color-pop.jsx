@@ -23,6 +23,7 @@ class EditCollectionColorPop extends React.Component {
       maybeResults: null
     };
     
+    this.onClick = this.onClick.bind(this);
     this.handleChange = this.handleChange.bind(this); // for when user enters in custom hex
     this.keyPress = this.keyPress.bind(this); // handles enter key for custom hex
     this.getRandomColor = this.getRandomColor.bind(this); // gets random color
@@ -58,6 +59,10 @@ class EditCollectionColorPop extends React.Component {
     }else{
       document.getElementsByClassName("editable-field-error-message")[0].style.display = "none";
     }
+  }
+    
+  onClick() {
+    this.props.togglePopover();
   }
   
   getRandomColor(){

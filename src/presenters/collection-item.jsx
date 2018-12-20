@@ -59,12 +59,19 @@ class CollectionItem extends React.Component{
                     </div>
                   </div>
                   <div className="collection-name-description">
+<<<<<<< HEAD
                     <CollectionLink collection={collection} className="button-area">
                       <div className="button">
                         <span className="project-badge private-project-badge" aria-label="private"></span>
                         <div className="project-name">{collection.name}</div>
                       </div>
                     </CollectionLink>
+=======
+                    <div className="button">
+                      <span className="project-badge private-project-badge" aria-label="private"></span>
+                      <div className="project-name">{collection.name}</div>
+                    </div>
+>>>>>>> ab2770ac52a7f6fffa270223c76a58ec6e85838d
                     <div className="description" style={{color: getContrastTextColor(collection.coverColor)}}><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
                   </div>
 
@@ -83,6 +90,10 @@ class CollectionItem extends React.Component{
                 ) : <div className="collection-link"><Loader/></div>}
               </div>
             </div>
+<<<<<<< HEAD
+=======
+          </CollectionLink>             
+>>>>>>> ab2770ac52a7f6fffa270223c76a58ec6e85838d
         )}
       </li>
     );

@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import AddCollectionProjectPop from '../pop-overs/add-collection-project-pop.jsx';
+<<<<<<< HEAD
 import PopoverWithButton from '../pop-overs/popover-with-button';
+=======
+import PopoverContainer from '../pop-overs/popover-container.jsx';
+>>>>>>> ab2770ac52a7f6fffa270223c76a58ec6e85838d
 
 const AddCollectionProject = ({currentUserIsOwner, ...props}) => {
   if(!currentUserIsOwner) {
@@ -10,14 +14,16 @@ const AddCollectionProject = ({currentUserIsOwner, ...props}) => {
   }
   
   return (
-    <PopoverWithButton
-      buttonClass="button add-project opens-pop-over"
-      buttonText="Add Project"
-      passToggleToPop
-    >
-      {/* togglePopover is a placeholder here - the real value will be passed by PopoverWithButton */ }
-      <AddCollectionProjectPop {...props} togglePopover={() => {}} />
-    </PopoverWithButton>
+    <PopoverContainer>
+      {({visible, togglePopover}) => (
+        <div className="button-wrap">
+          <button className={`button add-project opens-pop-over`} onClick={togglePopover}>
+              Add Project
+          </button>
+          { visible && <AddCollectionProjectPop {...props} togglePopover={togglePopover} /> }
+        </div>
+      )}
+    </PopoverContainer>
   );
 };
 

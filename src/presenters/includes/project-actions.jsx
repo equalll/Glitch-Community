@@ -50,3 +50,33 @@ RemixButton.propTypes = {
   isMember: PropTypes.bool,
   className: PropTypes.string,
 };
+
+export const ReportButton = ({name, id, ...props}) => {
+  const support = 'support@glitch.com';
+  const subject = `[Glitch] I want to report ${name}`;
+  const body = `\
+What do you think of the ${name} project? 
+How is it malicious?
+
+Let us know:
+
+
+
+
+
+--------------------
+
+Thanks 💖
+
+– Glitch Team
+
+(project id: ${id})\
+`;
+  const mailto = encodeURI(`mailto:${support}?subject=${subject}&body=${body}`);
+  return <ButtonLink href={mailto} {...props}>Report Abuse</ButtonLink>;
+};
+ReportButton.propTypes = {
+  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  className: PropTypes.string,
+};

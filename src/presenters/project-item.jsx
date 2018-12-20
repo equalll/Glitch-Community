@@ -28,12 +28,12 @@ export const ProjectItem = ({api, project, collectionColor, homepageCollection, 
             {( homepageCollection 
               ?
               <div className="description">
-                <TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown>
+                <TruncatedMarkdown length={80}>{project.description}</TruncatedMarkdown>
               </div>
               :
               <div className="description" 
                 style={project.private ? {} : {color: (props.category ? "black" : (collectionColor ? getContrastTextColor(collectionColor) : "black" ) )}}>
-                <TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
+                <TruncatedMarkdown length={80}>{project.description}</TruncatedMarkdown></div>
             )}
             <div className="overflow-mask" style={project.private ? {} : {backgroundColor: collectionColor}}></div>
           </div>

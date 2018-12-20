@@ -4,8 +4,12 @@ import {uniqueId} from 'lodash';
 
 import {OptimisticValue, TrimmedValue, FieldErrorIcon, FieldErrorMessage} from './field-helpers.jsx';
 
+<<<<<<< HEAD
 
 class PureEditableFieldHolder extends React.Component {
+=======
+export class PureEditableField extends React.Component {
+>>>>>>> ab2770ac52a7f6fffa270223c76a58ec6e85838d
   constructor(props) {
     super(props);
     this.state = { id: uniqueId("editable-field-") };
@@ -34,8 +38,6 @@ class PureEditableFieldHolder extends React.Component {
       autoComplete: "off",
       placeholder: this.props.placeholder,
       autoFocus: this.props.autoFocus,
-      onBlur: this.props.blur,
-      type: this.props.inputType,
     };
     
     const maybeErrorIcon = !!this.props.error && <FieldErrorIcon/>;
@@ -55,7 +57,7 @@ class PureEditableFieldHolder extends React.Component {
         <span className="editable-field-flex">
           {maybePrefix}
           <span className="editable-field-input">
-            {this.props.children(inputProps, this.textInput)}
+            <input {...inputProps} ref={this.textInput} />
             {maybeErrorIcon}
           </span>
           {maybeSuffix}
@@ -65,6 +67,7 @@ class PureEditableFieldHolder extends React.Component {
     );
   }
 }
+<<<<<<< HEAD
 
 PureEditableFieldHolder.propTypes = {
   value: PropTypes.string.isRequired,
@@ -106,16 +109,16 @@ export const PureEditableField = (props) => (
   </PureEditableFieldHolder>
 );
 
+=======
+>>>>>>> ab2770ac52a7f6fffa270223c76a58ec6e85838d
 PureEditableField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
-  blur: PropTypes.func,
   prefix: PropTypes.node,
   suffix: PropTypes.node,
   autoFocus: PropTypes.bool,
   error: PropTypes.string,
-  inputType: PropTypes.string,
 };
 
 export const EditableField = ({value, update, ...props}) => (
@@ -133,7 +136,6 @@ EditableField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
-  blur: PropTypes.func,
   prefix: PropTypes.node,
   suffix: PropTypes.node,
   autoFocus: PropTypes.bool,

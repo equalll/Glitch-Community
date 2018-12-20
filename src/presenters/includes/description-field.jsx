@@ -87,7 +87,7 @@ export const AuthDescription = ({authorized, description, placeholder, update}) 
       description={description} 
       update={update} 
       placeholder={placeholder} 
-    />
+    /> 
     :
     <StaticDescription description={description}/>
 );

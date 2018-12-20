@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Play Piano Like a Virtuoso',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F1_2.jpg?1545054763363",
-    link: 'https://glitch.com/~piano-genie'
+    title: 'Take A Chance on Lunch',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F4_2.jpg?1545054764089",
+    link: 'https://glitch.com/~lunch-roulette'
   },{
-    title: 'Chinese Ideograms and Radicals',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F2_2.jpg?1545054763728",
-    link: 'https://glitch.com/~chinese-radical-vis'
+    title: 'Colorful Flower Spirals',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F5_1.jpg?1545054763524",
+    link: 'https://glitch.com/~abop'
   },{
-    title: 'Make Your Own Code Walkthroughs',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F3_1.jpg?1545054763940",
-    link: 'https://glitch.com/~walkthrough'
+    title: 'Do You Want To Build A Snowman?',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F6_2.jpg?1545054764300",
+    link: 'https://glitch.com/~aframe-supercraft-christmas'
   }  
 ];
