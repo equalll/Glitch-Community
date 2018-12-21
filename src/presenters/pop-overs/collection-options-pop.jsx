@@ -11,7 +11,6 @@ const CollectionOptionsPop = (props) => {
     const collectionContainer = event.target.closest('li');
     collectionContainer.addEventListener('animationend', func, {once: true});
     collectionContainer.classList.add(className);
-    props.togglePopover();
   }
 
   function animateThenDeleteCollection(event) {
@@ -25,14 +24,12 @@ const CollectionOptionsPop = (props) => {
     <dialog className="pop-over collection-options-pop">
       <section className="pop-over-actions danger-zone last-section">
         {props.deleteCollection && <PopoverButton onClick={animateThenDeleteCollection} text="Delete Collection " emoji="bomb"/>}
-        
       </section>
     </dialog>
   );
 };
 
 CollectionOptionsPop.propTypes = {
-  togglePopover: PropTypes.func.isRequired,
   deleteCollection: PropTypes.func,
 };
   
