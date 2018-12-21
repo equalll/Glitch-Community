@@ -134,7 +134,6 @@ const ProjectPage = ({
       <div className='buttons space-between'>
         <ReportButton projectName={domain} projectId={project.id} />
         <div>
-        
           {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
           <RemixButton className="button-small"
             name={domain} isMember={isAuthorized}
