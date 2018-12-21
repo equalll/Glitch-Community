@@ -59,14 +59,12 @@ class CollectionItem extends React.Component{
                     </div>
                   </div>
                   <div className="collection-name-description">
-<<<<<<< HEAD
                     <CollectionLink collection={collection} className="button-area">
                       <div className="button">
                         <span className="project-badge private-project-badge" aria-label="private"></span>
                         <div className="project-name">{collection.name}</div>
                       </div>
-                    </CollectionLink>
-=======
+                    </CollectionLink>=======
                     <div className="button">
                       <span className="project-badge private-project-badge" aria-label="private"></span>
                       <div className="project-name">{collection.name}</div>
@@ -83,8 +81,7 @@ class CollectionItem extends React.Component{
                   :
                   <div className="projects-preview empty">
                     {(isAuthorized
-                      ? <p>This collection is empty – add some projects <span role="img" aria-label="">☝️</span></p>
-                      : <p>No projects to see in this collection just yet.</p>
+                      ? <p>This collection i to see in this collection just yet.</p>
                     )}
                   </div>
                 ) : <div className="collection-link"><Loader/></div>}

@@ -2,11 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import AddTeamProjectPop from '../pop-overs/add-team-project-pop.jsx';
-<<<<<<< HEAD
 import PopoverWithButton from '../pop-overs/popover-with-button';
-=======
 import PopoverContainer from '../pop-overs/popover-container.jsx';
->>>>>>> ab2770ac52a7f6fffa270223c76a58ec6e85838d
 
 const AddTeamProject = ({currentUserIsOnTeam, ...props}) => {
   if(!currentUserIsOnTeam) {
