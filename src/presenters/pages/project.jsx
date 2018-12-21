@@ -132,13 +132,16 @@ const ProjectPage = ({
     <section id="embed">
       <Embed domain={domain}/>
       <div className='buttons space-between'>
-        {true && console.log(domain)}
         <ReportButton projectName={domain} projectId={project.id} />
+        <div>
+        
+        
         {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
         <RemixButton className="button-small"
           name={domain} isMember={isAuthorized}
           onClick={() => trackRemix(project.id, domain)}
         />
+          </div>
       </div>
     </section>
     <section id="readme">

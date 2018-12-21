@@ -101,7 +101,6 @@ ${secondHalf}`;
       );
       this.setState({ submitted: true, submitSuccess: true });
     } catch (error) {
-      console.log(error);
       captureException(error);
       this.setState({ submitted: true, submitSuccess: false });
     }
