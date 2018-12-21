@@ -11,7 +11,7 @@ const PopoverWithButton = props => {
           childrenToShow = React.Children.map(props.children, child => React.cloneElement(child, { togglePopover: togglePopover }));
         }
         return (
-          <div className="button-wrap">
+          <div className={"button-wrap " + props.containerClass}>
             <button
               className={"button-small " + props.buttonClass}
               data-track={props.dataTrack}
@@ -29,6 +29,7 @@ const PopoverWithButton = props => {
 
 PopoverWithButton.propTypes = {
   buttonClass: PropTypes.string,
+  containerClass: PropTypes.string,
   dataTrack: PropTypes.string,
   buttonText: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired, // should be the stuff to show in a popover
@@ -37,6 +38,7 @@ PopoverWithButton.propTypes = {
 
 PopoverWithButton.defaultProps = {
   buttonClass: "",
+  containerClass: "",
   dataTrack: "",
   passToggleToPop: false
 };
