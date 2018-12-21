@@ -133,7 +133,7 @@ const ProjectPage = ({
       <Embed domain={domain}/>
       <div className="buttons space-between">
         <ReportButton projectName={domain} projectId={project.id} />
-        <div className="button-spacing">
+        <div>
           {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
           <RemixButton className="button-small"
             name={domain} isMember={isAuthorized}

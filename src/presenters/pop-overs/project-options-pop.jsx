@@ -103,7 +103,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
       )}
 
       {props.leaveProject &&
-        props.project.users.length > 1 && (
+        props.currentUserIsOnProject && (
         <section className="pop-over-actions collaborator-actions">
           <PopoverButton
             onClick={leaveProject}
