@@ -11,14 +11,12 @@ import AddProjectToCollectionPop from '../pop-overs/add-project-to-collection-po
 const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
   function animate(event, className, func) {
     const projectContainer = event.target.closest("li");
-    projectContainer.addEventListener("animationend", func, { once: true });
+    projectContainer.addEventListener('animationend', func, {once: true});
     projectContainer.classList.add(className);
   }
 
   function leaveProject(event) {
-    const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${
-      props.project.name
-    }?`;
+    const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${props.project.name}?`;
     if (window.confirm(prompt)) {
       props.leaveProject(props.project.id, event);
     }
@@ -33,15 +31,15 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
   }
 
   function animateThenAddPin(event) {
-    animate(event, "slide-up", () => props.addPin(props.project.id));
+    animate(event, 'slide-up', () => props.addPin(props.project.id));
   }
 
   function animateThenRemovePin(event) {
-    animate(event, "slide-down", () => props.removePin(props.project.id));
+    animate(event, 'slide-down', () => props.removePin(props.project.id));
   }
 
   function animateThenDeleteProject(event) {
-    animate(event, "slide-down", () => props.deleteProject(props.project.id));
+    animate(event, 'slide-down', () => props.deleteProject(props.project.id));
   }
 
   return (
