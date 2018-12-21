@@ -76,4 +76,4 @@ TeamAnalyticsTimePopButton.propTypes = {
   currentTimeFrame: PropTypes.string.isRequired
 };
 
-export default TeamAnalyticsTimePop;
+export default TeamAnalyticsTimePopButton;
