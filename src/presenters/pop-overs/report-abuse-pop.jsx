@@ -12,7 +12,7 @@ import {captureException} from '../../utils/sentry';
 
 import { CurrentUserConsumer } from '../current-user.jsx';
 
-export class ReportAbusePop extends React.Component {
+class ReportAbusePop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

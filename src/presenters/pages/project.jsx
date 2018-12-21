@@ -132,6 +132,7 @@ const ProjectPage = ({
     <section id="embed">
       <Embed domain={domain}/>
       <div className='buttons space-between'>
+        {true && console.log(domain)}
         <ReportButton projectName={domain} projectId={project.id} />
         {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
         <RemixButton className="button-small"
@@ -145,9 +146,6 @@ const ProjectPage = ({
     </section>
     <section id="related">
       <RelatedProjects ignoreProjectId={project.id} {...{api, teams, users}}/>
-    </section>
-    <section id="feedback" className="buttons buttons-right">
-      <ReportButton name={domain} id={project.id} className="button-small button-tertiary"/>
     </section>
   </main>
 );
