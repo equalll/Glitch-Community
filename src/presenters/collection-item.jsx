@@ -64,12 +64,7 @@ class CollectionItem extends React.Component{
                         <span className="project-badge private-project-badge" aria-label="private"></span>
                         <div className="project-name">{collection.name}</div>
                       </div>
-                    </CollectionLink>=======
-                    <div className="button">
-                      <span className="project-badge private-project-badge" aria-label="private"></span>
-                      <div className="project-name">{collection.name}</div>
-                    </div>
->>>>>>> ab2770ac52a7f6fffa270223c76a58ec6e85838d
+                    </CollectionLink>
                     <div className="description" style={{color: getContrastTextColor(collection.coverColor)}}><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
                   </div>
 
@@ -81,16 +76,13 @@ class CollectionItem extends React.Component{
                   :
                   <div className="projects-preview empty">
                     {(isAuthorized
-                      ? <p>This collection i to see in this collection just yet.</p>
+                      ? <p>This collection is empty – add some projects <span role="img" aria-label="">☝️</span></p>
+                      : <p>No projects to see in this collection just yet.</p>
                     )}
                   </div>
                 ) : <div className="collection-link"><Loader/></div>}
               </div>
             </div>
-<<<<<<< HEAD
-=======
-          </CollectionLink>             
->>>>>>> ab2770ac52a7f6fffa270223c76a58ec6e85838d
         )}
       </li>
     );
