@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import EditCollectionColorPop from '../pop-overs/edit-collection-color-pop.jsx';
 import PopoverWithButton from '../pop-overs/popover-with-button';
-import PopoverContainer from '../pop-overs/popover-container.jsx';
 
 const EditCollectionColor = ({update, initialColor, ...props}) => {  
   return (
