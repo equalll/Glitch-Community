@@ -68,8 +68,7 @@ class NewProjectPopButton extends React.Component {
     return (<PopoverWithButton 
       buttonClass="button-small"
       dataTrack="open new-project pop"
-      buttonText="New Project"
-      dataTrack="open new-project pop">
+      buttonText="New Project">
       <NewProjectPop projects={this.state.projects}/>
     </PopoverWithButton>);
   }
