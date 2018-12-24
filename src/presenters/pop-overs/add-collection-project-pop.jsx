@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
 
+import {TrackClick} from '../analytics';
 import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
@@ -15,16 +16,18 @@ const ProjectResultsUL = ({projects, collection, onClick}) => (
       <Notifications key={project.id}>
         {({createNotification}) => (
           <li>
-            <ProjectResultItem
-              domain={project.domain}
-              description={project.description}
-              users={project.users}
-              id={project.id}
-              isActive={false}
-              collection={collection}
-              action={() => onClick(project, collection, createNotification)}
-              isPrivate={project.private}
-            />
+            <TrackClick name="Project Added to Collection" properties={{origin: 'Add Project collection'}}>
+              <ProjectResultItem
+                domain={project.domain}
+                description={project.description}
+                users={project.users}
+                id={project.id}
+                isActive={false}
+                collection={collection}
+                onClick={() => onClick(project, collection, createNotification)}
+                isPrivate={project.private}
+              />
+            </TrackClick>
           </li>
         )}
       </Notifications>

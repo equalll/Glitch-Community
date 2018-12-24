@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
 
+import {AnalyticsContext} from '../analytics';
 import {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
@@ -88,19 +89,21 @@ async function loadCategory(api, id) {
 
 const CategoryPage = ({api, category, ...props}) => (
   <Layout api={api}>
-    <DataLoader get={() => loadCategory(api, category.id)}>
-      {category => (
-        <CollectionEditor api={api} initialCollection={category} >
-          {(category, funcs) => (
-            <CurrentUserConsumer>
-              {(currentUser) => (
-                <CategoryPageWrap category={category} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props}/>
-              )}
-            </CurrentUserConsumer>
-          )}
-        </CollectionEditor>
-      )}
-    </DataLoader>
+    <AnalyticsContext properties={{origin: 'category'}}>
+      <DataLoader get={() => loadCategory(api, category.id)}>
+        {category => (
+          <CollectionEditor api={api} initialCollection={category} >
+            {(category, funcs) => (
+              <CurrentUserConsumer>
+                {(currentUser) => (
+                  <CategoryPageWrap category={category} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props}/>
+                )}
+              </CurrentUserConsumer>
+            )}
+          </CollectionEditor>
+        )}
+      </DataLoader>
+    </AnalyticsContext>
   </Layout>
 );
 

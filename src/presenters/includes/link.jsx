@@ -11,7 +11,7 @@ import { getLink as getUserLink } from '../../models/user';
 /* global EXTERNAL_ROUTES */
 const external = Array.from(EXTERNAL_ROUTES);
 
-export const Link = ({to, children, ...props}) => {
+export const Link = React.forwardRef(({to, children, ...props}, ref) => {
   if (typeof to === 'string') {
     const currentUrl = new URL(window.location.href);
     const targetUrl = new URL(to, currentUrl);
@@ -19,7 +19,7 @@ export const Link = ({to, children, ...props}) => {
     if (targetUrl.origin !== currentUrl.origin ||
       external.some(route => targetUrl.pathname.startsWith(route))
     ) {
-      return <a href={to} {...props}>{children}</a>;
+      return <a href={to} {...props} ref={ref}>{children}</a>;
     }
     
     to = {
@@ -29,8 +29,8 @@ export const Link = ({to, children, ...props}) => {
     };
   }
   
-  return <RouterLink to={to} {...props}>{children}</RouterLink>;
-};
+  return <RouterLink to={to} {...props} innerRef={ref}>{children}</RouterLink>;
+});
 Link.propTypes = {
   to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   children: PropTypes.node.isRequired,

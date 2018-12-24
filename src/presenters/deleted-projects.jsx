@@ -5,9 +5,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getAvatarUrl} from '../models/project.js';
+import {getAvatarUrl} from '../models/project';
 
-import Loader from './includes/loader.jsx';
+import {TrackClick} from './analytics';
+import Loader from './includes/loader';
 
 /* globals Set */
 
@@ -18,13 +19,15 @@ function clickUndelete(event, callback) {
 }
 
 const DeletedProject = ({id, domain, onClick}) => (
-  <button className="button-unstyled" onClick={evt => clickUndelete(evt, onClick)}>
-    <div className="deleted-project">
-      <img className="avatar" src={getAvatarUrl(id)} alt=""/>
-      <div className="deleted-project-name">{domain}</div>
-      <div className="button button-small">Undelete</div>
-    </div>
-  </button>
+  <TrackClick name="Undelete clicked">
+    <button className="button-unstyled" onClick={evt => clickUndelete(evt, onClick)}>
+      <div className="deleted-project">
+        <img className="avatar" src={getAvatarUrl(id)} alt=""/>
+        <div className="deleted-project-name">{domain}</div>
+        <div className="button button-small">Undelete</div>
+      </div>
+    </button>
+  </TrackClick>
 );
 DeletedProject.propTypes = {
   id: PropTypes.string.isRequired,

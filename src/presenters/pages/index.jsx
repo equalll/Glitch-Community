@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Layout from '../layout.jsx';
 
 import {getEditorUrl} from '../../models/project';
+import {AnalyticsContext} from '../analytics';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import Link from '../includes/link.jsx';
 
@@ -110,9 +111,11 @@ IndexPage.propTypes = {
 
 const IndexPageContainer = ({api}) => (
   <Layout api={api}>
-    <CurrentUserConsumer>
-      {user => <IndexPage api={api} user={user}/>}
-    </CurrentUserConsumer>
+    <AnalyticsContext properties={{origin: 'index'}}>
+      <CurrentUserConsumer>
+        {user => <IndexPage api={api} user={user}/>}
+      </CurrentUserConsumer>
+    </AnalyticsContext>
   </Layout>
 );
 

@@ -6,7 +6,7 @@ import {getAvatarUrl} from  '../../models/project';
 import {StaticUsersList} from '../users-list.jsx';
 import {FALLBACK_AVATAR_URL} from '../../models/project.js';
 
-const ProjectResultItem = ({action, isActive, isPrivate, cdnUrl, ...project}) => {
+const ProjectResultItem = ({onClick, isActive, isPrivate, cdnUrl, ...project}) => {
   const activeClass = isActive ? "active" : "";
   const privateClass = isPrivate ? "private" : "";
   const resultClass = `button-unstyled result result-project ${activeClass} ${privateClass}`;
@@ -15,7 +15,7 @@ const ProjectResultItem = ({action, isActive, isPrivate, cdnUrl, ...project}) =>
 
   return (
     <div>
-      <button className={resultClass} onClick={action} data-project-id={id}>
+      <button className={resultClass} onClick={onClick} data-project-id={id}>
         <img className="avatar" src={getAvatarUrl(id, cdnUrl)} alt={`Project avatar for ${domain}`} onError={event => event.target.src = srcFallback}/>
         <div className="results-info">
           <div className="result-name" title={domain}>{domain}</div>
@@ -31,7 +31,7 @@ const ProjectResultItem = ({action, isActive, isPrivate, cdnUrl, ...project}) =>
 };
 
 ProjectResultItem.propTypes = {
-  action: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   domain: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,

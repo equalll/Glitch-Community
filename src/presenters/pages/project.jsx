@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import {getAvatarUrl} from '../../models/project';
 
+import {AnalyticsContext} from '../analytics';
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
@@ -187,9 +188,11 @@ ProjectPageLoader.propTypes = {
 
 const ProjectPageContainer = ({api, name}) => (
   <Layout api={api}>
-    <CurrentUserConsumer>
-      {currentUser => <ProjectPageLoader api={api} domain={name} currentUser={currentUser}/>}
-    </CurrentUserConsumer>
+    <AnalyticsContext properties={{origin: 'project'}}>
+      <CurrentUserConsumer>
+        {currentUser => <ProjectPageLoader api={api} domain={name} currentUser={currentUser}/>}
+      </CurrentUserConsumer>
+    </AnalyticsContext>
   </Layout>
 );
 

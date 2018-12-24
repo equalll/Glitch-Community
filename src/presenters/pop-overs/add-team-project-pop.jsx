@@ -168,7 +168,7 @@ export class AddTeamProjectPop extends React.Component {
             { filteredProjects.map((project) => (
               <li key={project.id}>
                 <ProjectResultItem
-                  action={(event) => this.onClick(event, project)}
+                  onClick={event => this.onClick(event, project)}
                   {...project}
                   title={project.domain}
                   isPrivate={project.private}

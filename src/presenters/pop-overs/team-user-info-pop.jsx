@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import {getAvatarThumbnailUrl} from '../../models/user';
 
+import {TrackClick} from '../analytics';
 import {NestedPopover} from './popover-nested.jsx';
 import {UserLink} from '../includes/link.jsx';
 import Thanks from '../includes/thanks.jsx';
@@ -16,9 +17,11 @@ const ADMIN_ACCESS_LEVEL = 30;
 
 const RemoveFromTeam = (props) => (
   <section className="pop-over-actions danger-zone">
-    <button className="button-small has-emoji button-tertiary button-on-secondary-background" {...props}>
-      Remove from Team <span className="emoji wave" role="img" aria-label=""/>
-    </button>
+    <TrackClick name="Remove from Team clicked">
+      <button className="button-small has-emoji button-tertiary button-on-secondary-background" {...props}>
+        Remove from Team <span className="emoji wave" role="img" aria-label=""/>
+      </button>
+    </TrackClick>
   </section>
 );
 
@@ -31,14 +34,18 @@ const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {
       <p className="action-description">
         Admins can update team info, billing, and remove users
       </p>
-      { userIsTeamAdmin ? (
-        <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)}>
-          Remove Admin Status <span className="emoji fast-down" />
-        </button>
+      {userIsTeamAdmin ? (
+        <TrackClick name="Remove Admin Status clicked">
+          <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)}>
+            Remove Admin Status <span className="emoji fast-down" />
+          </button>
+        </TrackClick>
       ) : (
-        <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL)}>
-          Make an Admin <span className="emoji fast-up" />
-        </button>
+        <TrackClick name="Make an Admin clicked">
+          <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL)}>
+            Make an Admin <span className="emoji fast-up" />
+          </button>
+        </TrackClick>
       )}
     </section>
   );

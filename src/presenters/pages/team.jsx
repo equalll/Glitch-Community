@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
+import {AnalyticsContext} from '../analytics';
 import DevToggles from '../includes/dev-toggles';
 import {CurrentUserConsumer} from '../current-user';
 import {DataLoader} from '../includes/loader';
@@ -335,23 +336,25 @@ const TeamPageEditor = ({api, initialTeam, children}) => (
   </TeamEditor>
 );
 const TeamPageContainer = ({api, team, ...props}) => (
-  <TeamPageEditor api={api} initialTeam={team}>
-    {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
-      <>
-        <Helmet>
-          <title>{team.name}</title>
-        </Helmet>
-        <CurrentUserConsumer>
-          {currentUser => (
-            <TeamPage api={api} team={team} {...funcs} currentUser={currentUser}
-              currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin}
-              {...props}
-            />
-          )}
-        </CurrentUserConsumer>
-        <TeamNameConflict team={team}/>
-      </>
-    )}
-  </TeamPageEditor>
+  <AnalyticsContext properties={{origin: 'team'}} context={{groupId: team.id}}>
+    <TeamPageEditor api={api} initialTeam={team}>
+      {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
+        <>
+          <Helmet>
+            <title>{team.name}</title>
+          </Helmet>
+          <CurrentUserConsumer>
+            {currentUser => (
+              <TeamPage api={api} team={team} {...funcs} currentUser={currentUser}
+                currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin}
+                {...props}
+              />
+            )}
+          </CurrentUserConsumer>
+          <TeamNameConflict team={team}/>
+        </>
+      )}
+    </TeamPageEditor>
+  </AnalyticsContext>
 );
 export default TeamPageContainer;

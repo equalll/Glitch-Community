@@ -65,7 +65,7 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectDomai
             <li key={project.id} className="button-unstyled">
               <ProjectResultItem 
                 {...project} 
-                action = {() => onClick(project.domain)} 
+                onClick = {() => onClick(project.domain)} 
                 isActive = {isActive(currentProjectDomain, project)}
               />
             </li>

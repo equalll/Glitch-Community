@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TeamsList from '../teams-list.jsx';
+
+import {TrackClick} from '../analytics';
+import TeamsList from '../teams-list';
 
 // Image Buttons
 
@@ -8,14 +10,18 @@ export const ImageButtons = ({name, uploadImage, clearImage}) => {
   return (
     <div className="upload-image-buttons">
       { !!uploadImage && (
-        <button className="button button-small button-tertiary" onClick={uploadImage}>
-          Upload {name}
-        </button>
+        <TrackClick name={`Upload ${name}`}>
+          <button className="button button-small button-tertiary" onClick={uploadImage}>
+            Upload {name}
+          </button>
+        </TrackClick>
       )}
       { !!clearImage && (
-        <button className="button button-small button-tertiary" onClick={clearImage}>
-          Clear {name} 
-        </button>
+        <TrackClick name={`Clear ${name}`}>
+          <button className="button button-small button-tertiary" onClick={clearImage}>
+            Clear {name} 
+          </button>
+        </TrackClick>
       )}
     </div>
   );

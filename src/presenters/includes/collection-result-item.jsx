@@ -35,7 +35,7 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   }
 };
 
-const CollectionResultItem = ({addProjectToCollection, project, collection, currentUserLogin, isActive, togglePopover}) => {
+const CollectionResultItem = ({onClick, project, collection, currentUserLogin, isActive, togglePopover}) => {
   let resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
@@ -47,7 +47,7 @@ const CollectionResultItem = ({addProjectToCollection, project, collection, curr
     <Notifications>
       {({createNotification}) => ( 
         <div>
-          <button className={resultClass} onClick={() => addProject(addProjectToCollection, project, collection, collectionPath, createNotification, togglePopover)} data-project-id={project.id}>
+          <button className={resultClass} onClick={() => addProject(onClick, project, collection, collectionPath, createNotification, togglePopover)} data-project-id={project.id}>
             <div className="avatar" id={"avatar-collection-" + collection.id}>
               <CollectionAvatar backgroundColor={collection.coverColor}/>
             </div>
@@ -56,7 +56,7 @@ const CollectionResultItem = ({addProjectToCollection, project, collection, curr
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
             </div>
           </button>
-          <a href={`${collectionPath}`} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">
+          <a href={collectionPath} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">
             View →
           </a>
         </div>
@@ -66,7 +66,7 @@ const CollectionResultItem = ({addProjectToCollection, project, collection, curr
 };
 
 CollectionResultItem.propTypes = {
-  addProjectToCollection: PropTypes.func,
+  onClick: PropTypes.func,
   collection: PropTypes.object.isRequired,
   currentUserLogin: PropTypes.string.isRequired,
   isActive: PropTypes.bool,

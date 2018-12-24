@@ -4,6 +4,7 @@ import {Redirect} from 'react-router-dom';
 import randomColor from 'randomcolor';
 import {captureException} from '../../utils/sentry';
 
+import {TrackClick} from '../analytics';
 import {getLink, defaultAvatar} from '../../models/collection';
 import {getAvatarUrl} from '../../models/project';
 import {getCollectionPair} from '../../models/words';
@@ -119,13 +120,15 @@ class AddProjectToCollectionPop extends React.Component {
                   // filter out collections that already contain the selected project
                   (collection.projects.every(project => project.id !== this.props.project.id) && 
                     <li key={collection.id}>
-                      <CollectionResultItem 
-                        addProjectToCollection={this.props.addProjectToCollection}
-                        currentUserLogin={this.props.currentUser.login}
-                        project={this.props.project}
-                        collection={collection}                         
-                        togglePopover={this.props.togglePopover} 
-                      />
+                      <TrackClick name="Project Added to Collection">
+                        <CollectionResultItem 
+                          onClick={this.props.addProjectToCollection}
+                          currentUserLogin={this.props.currentUser.login}
+                          project={this.props.project}
+                          collection={collection}                         
+                          togglePopover={this.props.togglePopover} 
+                        />
+                      </TrackClick>
                     </li>
                   )
                 )
@@ -151,9 +154,11 @@ class AddProjectToCollectionPop extends React.Component {
               error={error || queryError}
             />
             {!this.state.working ? (
-              <button type="submit" className="create-collection button-small" disabled={!!queryError}>
-                Create
-              </button>
+              <TrackClick name="Create Collection clicked" properties={inherited => ({...inherited, origin: `${inherited.origin} project`})}>
+                <button type="submit" className="create-collection button-small" disabled={!!queryError}>
+                  Create
+                </button>
+              </TrackClick>
             ) : <Loader/>}       
           </form>         
         </section>

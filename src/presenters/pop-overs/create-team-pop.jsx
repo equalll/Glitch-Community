@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import _ from 'lodash';
 import {withRouter} from 'react-router-dom';
+import {TrackClick} from '../analytics';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import {getPredicates, getTeamPair} from '../../models/words';
 import {getLink} from '../../models/team';
@@ -137,9 +138,11 @@ class CreateTeamPopBase extends React.Component {
             </p>
           
             {this.state.isLoading ? <Loader /> : (
-              <button type="submit" className="button-small has-emoji">
-                Create Team <span className="emoji thumbs_up" />
-              </button>
+              <TrackClick name="Create Team submitted">
+                <button type="submit" className="button-small has-emoji">
+                  Create Team <span className="emoji thumbs_up" />
+                </button>
+              </TrackClick>
             )}
           </form>
 
