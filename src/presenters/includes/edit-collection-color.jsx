@@ -7,16 +7,12 @@ import PopoverContainer from '../pop-overs/popover-container.jsx';
 
 const EditCollectionColor = ({update, initialColor, ...props}) => {  
   return (
-    <PopoverContainer>
-      {({visible, togglePopover}) => (
-        <div className="button-wrap edit-collection-color-btn">
-          <button className={`button add-project opens-pop-over`} onClick={togglePopover}>
-                Color
-          </button>
-          { visible && <EditCollectionColorPop {...props} togglePopover={togglePopover} updateColor={update} initialColor={initialColor}/> }
-        </div>
-      )}
-    </PopoverContainer>
+    <PopoverWithButton 
+      containerClass="edit-collection-color-btn"
+      buttonClass="button add-project opens-pop-over" buttonText="Color"
+      passToggleToPop >
+      <EditCollectionColorPop {...props} updateColor={update} initialColor={initialColor}/>
+    </PopoverWithButton>
   );
 };
 
